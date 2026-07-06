@@ -1,0 +1,799 @@
+{
+  "schemaVersion": "plx-cursor-skills-manifest/v1",
+  "version": "1.1.0",
+  "publishedAt": "2026-07-02T18:14:58Z",
+  "repo": "petralabx/skills",
+  "defaultBranch": "main",
+  "maintainers": [
+    "ops@petralabx.com"
+  ],
+  "packages": [
+    {
+      "id": "plx-engineering-core",
+      "name": "PLX Engineering Core",
+      "description": "Default bundle for PLX_MC and portal contributors.",
+      "skillIds": [
+        "automate",
+        "autonomous-verifier",
+        "babysit",
+        "canvas",
+        "capabilities-deck",
+        "claude-code-context-hygiene",
+        "codebase-investigation",
+        "create-hook",
+        "create-rule",
+        "create-skill",
+        "dead-code-triage",
+        "isomorphic-refactor",
+        "migrate-to-skills",
+        "pre-plan-recalibrator",
+        "project-hardener",
+        "project-orchestrator",
+        "project-research-runner",
+        "project-researcher",
+        "quality-gate",
+        "reliable-tdd-loop",
+        "review-bugbot",
+        "review-security",
+        "root-cause-debugger",
+        "safe-deletion",
+        "sample-feedback-deck",
+        "split-to-prs",
+        "taste-skill",
+        "uat-runner",
+        "ui-ux-design-loop",
+        "vmc-sync",
+        "wterm-preflight",
+        "brief-to-quote",
+        "report-export"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "id": "automate",
+      "name": "automate",
+      "description": "Create Cursor Automations. Use only when the user explicitly asks for Cursor Automations, scheduled Cursor agents, or opening the Automations editor with a reviewed draft.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/automate/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "workflow"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/automate/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "autonomous-verifier",
+      "name": "autonomous-verifier",
+      "description": "Enforces a verification-first workflow for bug fixes and complex functionality using contract tests, eval suites, SLA and pillar checks, browser snapshot validation, VMC MCP progress reporting, and CI correction loops. Use when implementing non-trivial code, fixing reliability issues, validating external integrations, or running VMC reliability phases.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/autonomous-verifier/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "verification"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/autonomous-verifier/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "babysit",
+      "name": "babysit",
+      "description": ">-",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/babysit/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "workflow"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/babysit/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "brief-to-quote",
+      "name": "brief-to-quote",
+      "description": "Turn a customer or product brief into a costed price quote plus a shareable report and presentation for PLX contract manufacturing. Use when a customer brief, formula/SKU list, or a \"what would this cost\", \"what's the KG price\", \"is $X per unit achievable\", or \"price these at these volumes\" request comes in. Covers brief intake, pulling REAL PLX raw-material costs from the database, market research for catalog gaps, building the bulk $/kg + per-unit cost model (fill, waste factor, labour/overhead, margin), back-solving price/margin and reformulations, and producing an interactive canvas + PDF/Word report shared to OneDrive. Pairs with the report-export skill.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/brief-to-quote/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "workflow"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "main",
+        "path": "skills/brief-to-quote/",
+        "importedAt": "2026-07-06T20:45:00Z"
+      }
+    },
+    {
+      "id": "canvas",
+      "name": "canvas",
+      "description": ">-",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/canvas/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "workflow",
+        "artifacts"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/canvas/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "capabilities-deck",
+      "name": "capabilities-deck",
+      "description": "Build a confidential, multi-concept \"capabilities deck\" / product-innovation pitch microsite for a brand (the PAUME pattern) using the typed microsite engine. Use when asked to build a capabilities deck, an innovation / diversification pitch, a multi-concept product proposal microsite, or \"a PAUME-style microsite\" for a customer, publish it to staging, and export/email a print-clean PDF.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/capabilities-deck/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "design",
+        "microsite",
+        "sales"
+      ],
+      "owner": "ops@petralabx.com",
+      "submittedBy": "vince@petrasoap.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-customer-portal",
+        "ref": "main",
+        "path": ".cursor/skills/capabilities-deck/",
+        "importedAt": "2026-07-02T18:14:58Z"
+      }
+    },
+    {
+      "id": "claude-code-context-hygiene",
+      "name": "claude-code-context-hygiene",
+      "description": "Masterful orchestrator of Claude Code context-management commands. Keeps long, complex coding sessions lean, cheap, and high-signal by choosing between /btw, /compact, /fork, /agents + subagents, /context, /rewind, and /clear. Use during long or autonomous sessions, when context is bloating or getting noisy, when token usage is high, when delegating deep work (tests, security, review) to subagents, or when the user mentions context hygiene, compaction, forking, subagents, rewind, or clearing context.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/claude-code-context-hygiene/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "context"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/claude-code-context-hygiene/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "codebase-investigation",
+      "name": "codebase-investigation",
+      "description": "Investigate code by tracing data flow end-to-end, narrowing hypotheses with evidence, and reporting root cause with file:line proof. Use when debugging cross-cutting issues, answering \"how does X work?\", tracing a feature from entry point to data layer, or scoping the blast radius of a change across an unfamiliar repo.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/codebase-investigation/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "debugging",
+        "investigation"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/codebase-investigation/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "create-hook",
+      "name": "create-hook",
+      "description": ">-",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/create-hook/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "meta",
+        "tooling"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/create-hook/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "create-rule",
+      "name": "create-rule",
+      "description": ">-",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/create-rule/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "meta",
+        "tooling"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/create-rule/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "create-skill",
+      "name": "create-skill",
+      "description": ">-",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/create-skill/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "meta",
+        "tooling"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/create-skill/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "dead-code-triage",
+      "name": "dead-code-triage",
+      "description": "Classify suspected-unused code before deleting it, ruling out dynamic imports, framework entry points, barrel re-exports, and config/string references. Use when reviewing dead-code candidates from static analysis (vulture, knip, ts-prune, unused-exports) or manual inspection, to avoid false-positive deletions that break runtime behavior.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/dead-code-triage/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "cleanup"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/dead-code-triage/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "isomorphic-refactor",
+      "name": "isomorphic-refactor",
+      "description": "Preserve behavior while simplifying code. Use when the user asks to simplify, refactor, DRY, reduce duplication, remove boilerplate, collapse helpers, shrink types, or make an isomorphic behavior-preserving cleanup.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/isomorphic-refactor/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "refactoring"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/isomorphic-refactor/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "migrate-to-skills",
+      "name": "migrate-to-skills",
+      "description": ">-",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/migrate-to-skills/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "meta"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/migrate-to-skills/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "pre-plan-recalibrator",
+      "name": "pre-plan-recalibrator",
+      "description": "Pauses before implementation planning to clarify user intent, context, constraints, success criteria, risks, and task framing. Use when explicitly invoked for prompt calibration, pre-plan recalibration, or planning prep. The agent may recommend it only when a plan would otherwise be materially under-specified or risky.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/pre-plan-recalibrator/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "planning"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/pre-plan-recalibrator/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "project-hardener",
+      "name": "project-hardener",
+      "description": "Drive an integrated project branch to near-perfect quality with a bounded convergence loop: detect failures (full suite, E2E, lint, typecheck), triage findings, run adversarial fixer and auditor passes, and prove zero regressions versus a pre-harden baseline. Use when the user says \"harden this\", \"drive to near-perfect\", \"fix bugs and tighten before merge\", \"post-build convergence\", or asks for final quality hardening after implementation.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/project-hardener/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "project-lifecycle"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/project-hardener/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "project-orchestrator",
+      "name": "project-orchestrator",
+      "description": "Turn a project request into an approved spec in one session, then execute it end-to-end as dependency-ordered phases in isolated git worktrees with delegated agents. Use when the user wants a large, multi-file, or multi-step effort planned and built autonomously, says \"spec and execute\", \"run this as a project\", \"plan and build this\", or hands over a feature, migration, or refactor that spans phases. Selects the best available models per role at runtime.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/project-orchestrator/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "project-lifecycle"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/project-orchestrator/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "project-research-runner",
+      "name": "project-research-runner",
+      "description": "Converts a project intake or draft into a research-backed plan, roadmap, milestones, risks, and tasks. Use when the user wants a Cursor-executed research run for a website, skill, workflow, integration, business project, utility, or system build, especially when the result should include a builder-compatible draft update.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/project-research-runner/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "project-lifecycle"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/project-research-runner/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "project-researcher",
+      "name": "project-researcher",
+      "description": "Build a pre-spec research brief by combining internal repo mapping with external best-practice research, then iterating in an objective loop until brief quality converges. Use when the user says \"research this\", \"scope options before building\", \"what are the approaches\", \"investigate before planning\", or asks for a recommendation with trade-offs.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/project-researcher/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "project-lifecycle"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/project-researcher/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "quality-gate",
+      "name": "quality-gate",
+      "description": "Orchestrates engineering quality workflows across debugging, verification, refactoring, safe deletion, TDD, CI, and release readiness. Use when the user asks to make work production ready, run a quality gate, harden changes, review risk, debug deeply, verify implementation, or prepare for merge.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/quality-gate/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "quality"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/quality-gate/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "reliable-tdd-loop",
+      "name": "reliable-tdd-loop",
+      "description": "Enforces failing-test-first discipline scoped to a single domain's contract test file (e.g. todos-contracts, chat-contracts, swarm-contracts, second-brain-contracts). Runs red-green-refactor grind loops via narrow .cursor/hooks.json triggers (beforeShellExecution on `npm test -- <domain>-contracts` only, subagentStop auto-rerun). Includes null-hypothesis control arm (re-run unchanged baseline each loop, record variance) and Tier-1 vs Tier-2 gating. Use inside autoresearch/<domain> loops 2-5, during any reliability bug fix that needs a contract test, or whenever a new failing test must precede implementation.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/reliable-tdd-loop/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "quality",
+        "tdd"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/reliable-tdd-loop/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "report-export",
+      "name": "report-export",
+      "description": "Convert a Markdown or HTML report into a polished, shareable PDF and Word (.docx) file, and optionally copy it to OneDrive/SharePoint for non-technical colleagues. Use when the user wants to download, export, send, or share an analysis/report/quote as a PDF, Word document, or other non-technical format, or mentions PDF, .docx, \"save as\", \"shareable\", or \"send to colleagues\".",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/report-export/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "workflow"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "main",
+        "path": "skills/report-export/",
+        "importedAt": "2026-07-06T20:45:00Z"
+      }
+    },
+    {
+      "id": "review-bugbot",
+      "name": "review-bugbot",
+      "description": "Review code changes with Bugbot subagent.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/review-bugbot/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "quality",
+        "review"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/review-bugbot/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "review-security",
+      "name": "review-security",
+      "description": "Review code changes with Security Review subagent.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/review-security/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "quality",
+        "review"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/review-security/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "root-cause-debugger",
+      "name": "root-cause-debugger",
+      "description": "Diagnoses and fixes codebase bugs through reproducible evidence, lifecycle tracing, hypothesis ledgers, minimal scoped fixes, and verification gates. Use when the user reports failing tests, broken UI flows, unreliable chat/swarm behavior, API errors, CI failures, flaky behavior, DB issues, external integration failures, performance regressions, or asks to debug/root-cause/fix an unknown issue.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/root-cause-debugger/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "debugging"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/root-cause-debugger/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "safe-deletion",
+      "name": "safe-deletion",
+      "description": "Remove files, symbols, modules, or dependencies safely so deletions are verified before commit and never break transitive consumers. Use when deleting code confirmed unused (e.g. by the dead-code-triage skill), removing a dependency, collapsing a module, or retiring a deprecation shim.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/safe-deletion/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "cleanup"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/safe-deletion/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "sample-feedback-deck",
+      "name": "sample-feedback-deck",
+      "description": "Build a confidential, customer-facing \"sample feedback\" deck (the SoapBox pattern): a single-product scroll-snap microsite that explains a formulation / sample reformulation update and asks the customer which version to move forward with. Use when asked to build a sample-feedback page, a reformulation / R&D sample update for a customer or brand, \"a SoapBox-style deck\", or to turn a technical-overview document into a polished client page, and to publish it to staging.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/sample-feedback-deck/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "design",
+        "microsite",
+        "sales"
+      ],
+      "owner": "ops@petralabx.com",
+      "submittedBy": "vince@petrasoap.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-customer-portal",
+        "ref": "main",
+        "path": ".cursor/skills/sample-feedback-deck/",
+        "importedAt": "2026-07-02T18:14:58Z"
+      }
+    },
+    {
+      "id": "split-to-prs",
+      "name": "split-to-prs",
+      "description": ">-",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/split-to-prs/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "git",
+        "workflow"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/split-to-prs/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "taste-skill",
+      "name": "taste-skill",
+      "description": "Senior UI/UX engineering taste guard. Use when designing or reviewing frontend surfaces, correcting default LLM visual bias, enforcing component architecture, responsive layout, motion discipline, and premium design execution.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/taste-skill/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "design"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/taste-skill/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "uat-runner",
+      "name": "uat-runner",
+      "description": "Run PLX portal User Acceptance Testing (UAT) scenarios and record results as governed evidence. Use when asked to run UAT, execute acceptance tests for the customer portal, validate go-live readiness, or update the portal UAT quality-ledger. Checks out the MC task via the PLX-MC MCP, runs the UAT cases, and writes results to the portal uat quality-ledger so Mission Control sees the same posture under BKT-UAT.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/uat-runner/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "quality",
+        "testing"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/uat-runner/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "ui-ux-design-loop",
+      "name": "ui-ux-design-loop",
+      "description": "Drive any web surface to near-perfect UI/UX quality with a bounded convergence loop specialized for design-system conformance, interaction wiring, responsive integrity, and accessibility. Composes project-hardener (does not fork the loop engine) and adds a manifest-driven UI gate pack — G1 tokens/components, G2 dead-control sweep, G3 responsive matrix, G4 axe accessibility — plus a scope-gated enhancement phase. Use when the user asks for \"UI/UX loop\", \"harden the UI\", \"design-system alignment\", \"fix dead buttons/wiring\", \"responsive polish\", or \"accessibility pass\" on a web route.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/ui-ux-design-loop/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "design"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/ui-ux-design-loop/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "vmc-sync",
+      "name": "vmc-sync",
+      "description": "Keep Cursor sessions synchronized with VMC (Mission Control) todo/project state via the vmc-context MCP server — checkout, progress, and complete with evidence. Use when working on a VMC-tracked todo, claiming a \"Send to Cursor\" handoff, or when the user references Mission Control tasks, the roadmap, or a todo ID. Requires the vmc-context MCP server or VMC API access.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/vmc-sync/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "vmc",
+        "integration"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/vmc-sync/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "wterm-preflight",
+      "name": "wterm-preflight",
+      "description": "Run the canonical local CI gate via scripts/wterm-preflight.sh before committing and pushing in the agentic-swarm / VMC repo (pre-commit fast gate, pre-push full gate). Use before any git commit or push in that repo. If scripts/wterm-preflight.sh is not present in the current repo, this skill does not apply — use that repo's own pre-commit checks instead.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/wterm-preflight/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "ci",
+        "git"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "taylorvalton/plx-cursor-skills",
+        "ref": "main",
+        "path": ".cursor/skills/wterm-preflight/",
+        "importedAt": "2026-06-30T19:18:04Z"
+      }
+    }
+  ],
+  "gitRef": "main"
+}
