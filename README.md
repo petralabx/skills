@@ -12,6 +12,14 @@ them into your local skill directories.
 - **brief-to-quote** — Turn a customer/product brief into a costed PLX **price quote**
   (real raw-material costs from the database, market research for gaps, bulk **$/kg**
   + per-unit model, reformulations) plus an interactive canvas and PDF/Word report.
+- **uat-feedback-batch-fix** — Diagnose/fix one UAT Feedback session batch → one staging PR → retest email from `cos@`.
+- **uat-weekly-batch-loop** — Weekly orchestrator for UAT session batches (Verified-only done + brain_ingest closeout).
+- **staging-dual-db-migrate** — Apply gold/Prisma migrations to **both** staging and UAT DBs.
+- **plx-graph-mail** — Graph app-only mail (default From `cos@petrasoap.com`; canonical staging URL only).
+- **worktree-open-session** — New portal worktree + bootstrap + Cursor window + PASTE-FIRST/KICKOFF.
+
+See `manifest.json` for the full published catalog (`plx-engineering-core`).
+
 
 ## Activate (sync into your machine)
 
