@@ -1,7 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.1.0",
-  "publishedAt": "2026-07-02T18:14:58Z",
+  "version": "1.2.0",
+  "publishedAt": "2026-07-09T15:40:56Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
   "maintainers": [
@@ -16,6 +16,7 @@
         "automate",
         "autonomous-verifier",
         "babysit",
+        "brief-to-quote",
         "canvas",
         "capabilities-deck",
         "claude-code-context-hygiene",
@@ -26,6 +27,7 @@
         "dead-code-triage",
         "isomorphic-refactor",
         "migrate-to-skills",
+        "plx-graph-mail",
         "pre-plan-recalibrator",
         "project-hardener",
         "project-orchestrator",
@@ -33,19 +35,22 @@
         "project-researcher",
         "quality-gate",
         "reliable-tdd-loop",
+        "report-export",
         "review-bugbot",
         "review-security",
         "root-cause-debugger",
         "safe-deletion",
         "sample-feedback-deck",
         "split-to-prs",
+        "staging-dual-db-migrate",
         "taste-skill",
+        "uat-feedback-batch-fix",
         "uat-runner",
+        "uat-weekly-batch-loop",
         "ui-ux-design-loop",
         "vmc-sync",
-        "wterm-preflight",
-        "brief-to-quote",
-        "report-export"
+        "worktree-open-session",
+        "wterm-preflight"
       ]
     }
   ],
@@ -367,6 +372,31 @@
       }
     },
     {
+      "id": "plx-graph-mail",
+      "name": "plx-graph-mail",
+      "description": "Send email via Microsoft Graph app-only Mail.Send for PLX operator workflows. Default From cos@petrasoap.com; enforces staging.plxcustomer.io URLs.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/plx-graph-mail/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "email",
+        "graph",
+        "m365",
+        "ops"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "feat/plx-operator-skills-2026-07-09",
+        "path": "skills/plx-graph-mail/",
+        "importedAt": "2026-07-09T15:40:56Z"
+      }
+    },
+    {
       "id": "pre-plan-recalibrator",
       "name": "pre-plan-recalibrator",
       "description": "Pauses before implementation planning to clarify user intent, context, constraints, success criteria, risks, and task framing. Use when explicitly invoked for prompt calibration, pre-plan recalibration, or planning prep. The agent may recommend it only when a plan would otherwise be materially under-specified or risky.",
@@ -682,6 +712,31 @@
       }
     },
     {
+      "id": "staging-dual-db-migrate",
+      "name": "staging-dual-db-migrate",
+      "description": "Apply PLX gold-table / Prisma migrations safely to BOTH plx-postgres-staging and plx-postgres-uat. Never production.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/staging-dual-db-migrate/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "database",
+        "staging",
+        "migrations",
+        "portal"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "feat/plx-operator-skills-2026-07-09",
+        "path": "skills/staging-dual-db-migrate/",
+        "importedAt": "2026-07-09T15:40:56Z"
+      }
+    },
+    {
       "id": "taste-skill",
       "name": "taste-skill",
       "description": "Senior UI/UX engineering taste guard. Use when designing or reviewing frontend surfaces, correcting default LLM visual bias, enforcing component architecture, responsive layout, motion discipline, and premium design execution.",
@@ -701,6 +756,31 @@
         "ref": "main",
         "path": ".cursor/skills/taste-skill/",
         "importedAt": "2026-06-30T19:18:04Z"
+      }
+    },
+    {
+      "id": "uat-feedback-batch-fix",
+      "name": "uat-feedback-batch-fix",
+      "description": "Diagnose and fix one PLX UAT Feedback session batch: one PR into staging with a plain UAT-Feedback stamp, wait for Ready + mark-ready, then email submitters from cos@petrasoap.com. Does not set Verified.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/uat-feedback-batch-fix/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "uat",
+        "portal",
+        "staging",
+        "retest"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "feat/plx-operator-skills-2026-07-09",
+        "path": "skills/uat-feedback-batch-fix/",
+        "importedAt": "2026-07-09T15:40:56Z"
       }
     },
     {
@@ -727,9 +807,34 @@
       }
     },
     {
+      "id": "uat-weekly-batch-loop",
+      "name": "uat-weekly-batch-loop",
+      "description": "Run one weekly PLX UAT session-batch cycle: select batches, Vince one-approval, dispatch workers, email after Ready, closeout with WEEKLY-LOG + brain_ingest. Verified-only done.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/uat-weekly-batch-loop/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "uat",
+        "portal",
+        "weekly-loop",
+        "orchestration"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "feat/plx-operator-skills-2026-07-09",
+        "path": "skills/uat-weekly-batch-loop/",
+        "importedAt": "2026-07-09T15:40:56Z"
+      }
+    },
+    {
       "id": "ui-ux-design-loop",
       "name": "ui-ux-design-loop",
-      "description": "Drive any web surface to near-perfect UI/UX quality with a bounded convergence loop specialized for design-system conformance, interaction wiring, responsive integrity, and accessibility. Composes project-hardener (does not fork the loop engine) and adds a manifest-driven UI gate pack — G1 tokens/components, G2 dead-control sweep, G3 responsive matrix, G4 axe accessibility — plus a scope-gated enhancement phase. Use when the user asks for \"UI/UX loop\", \"harden the UI\", \"design-system alignment\", \"fix dead buttons/wiring\", \"responsive polish\", or \"accessibility pass\" on a web route.",
+      "description": "Drive any web surface to near-perfect UI/UX quality with a bounded convergence loop specialized for design-system conformance, interaction wiring, responsive integrity, and accessibility. Composes project-hardener (does not fork the loop engine) and adds a manifest-driven UI gate pack \u2014 G1 tokens/components, G2 dead-control sweep, G3 responsive matrix, G4 axe accessibility \u2014 plus a scope-gated enhancement phase. Use when the user asks for \"UI/UX loop\", \"harden the UI\", \"design-system alignment\", \"fix dead buttons/wiring\", \"responsive polish\", or \"accessibility pass\" on a web route.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/ui-ux-design-loop/",
@@ -751,7 +856,7 @@
     {
       "id": "vmc-sync",
       "name": "vmc-sync",
-      "description": "Keep Cursor sessions synchronized with VMC (Mission Control) todo/project state via the vmc-context MCP server — checkout, progress, and complete with evidence. Use when working on a VMC-tracked todo, claiming a \"Send to Cursor\" handoff, or when the user references Mission Control tasks, the roadmap, or a todo ID. Requires the vmc-context MCP server or VMC API access.",
+      "description": "Keep Cursor sessions synchronized with VMC (Mission Control) todo/project state via the vmc-context MCP server \u2014 checkout, progress, and complete with evidence. Use when working on a VMC-tracked todo, claiming a \"Send to Cursor\" handoff, or when the user references Mission Control tasks, the roadmap, or a todo ID. Requires the vmc-context MCP server or VMC API access.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/vmc-sync/",
@@ -772,9 +877,34 @@
       }
     },
     {
+      "id": "worktree-open-session",
+      "name": "worktree-open-session",
+      "description": "Create an isolated git worktree off staging for PLX portal work, bootstrap it, open a new Cursor window, and paste PASTE-FIRST/KICKOFF.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/worktree-open-session/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "git",
+        "worktree",
+        "bootstrap",
+        "workflow"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "feat/plx-operator-skills-2026-07-09",
+        "path": "skills/worktree-open-session/",
+        "importedAt": "2026-07-09T15:40:56Z"
+      }
+    },
+    {
       "id": "wterm-preflight",
       "name": "wterm-preflight",
-      "description": "Run the canonical local CI gate via scripts/wterm-preflight.sh before committing and pushing in the agentic-swarm / VMC repo (pre-commit fast gate, pre-push full gate). Use before any git commit or push in that repo. If scripts/wterm-preflight.sh is not present in the current repo, this skill does not apply — use that repo's own pre-commit checks instead.",
+      "description": "Run the canonical local CI gate via scripts/wterm-preflight.sh before committing and pushing in the agentic-swarm / VMC repo (pre-commit fast gate, pre-push full gate). Use before any git commit or push in that repo. If scripts/wterm-preflight.sh is not present in the current repo, this skill does not apply \u2014 use that repo's own pre-commit checks instead.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/wterm-preflight/",
@@ -794,6 +924,5 @@
         "importedAt": "2026-06-30T19:18:04Z"
       }
     }
-  ],
-  "gitRef": "main"
+  ]
 }
