@@ -44,3 +44,4 @@ The sync `git pull`s the latest and copies each `skills/<name>` into both
 Add or edit a skill under `skills/<name>/SKILL.md` (+ optional `reference.md`,
 `scripts/`, `assets/`), open a PR, and re-run the sync after merge. Keep
 **app-specific** skills in their app repo; this repo is for **cross-project** skills.
+
