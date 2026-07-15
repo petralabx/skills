@@ -93,3 +93,7 @@ Skill ids must match `manifest.json`. No secrets in `skills/`. Catalog: PLX_MC `
 Repo secrets: `PLX_MC_BASE_URL`, `COMPLIANCE_CI_TOKEN`.  
 Repo variable: `COMPLIANCE_MODE` (`soft` → `hard` when ready).  
 Enable branch protection on `main` — require PR + checks.
+
+### Routing metadata (shadow)
+
+`.github/workflows/mc-routing-metadata.yml` submits pull-request metadata to MC `/api/routing/propose` via OIDC when org/repo variable `PLX_MC_ROUTING_METADATA_ENABLED=1`. It does not check out or execute PR code. Contract: `.github/plx-mc-routing-manifest.json`. Mode is shadow; fuzzy auto-link stays off. Rollback: set `PLX_MC_ROUTING_METADATA_ENABLED=0` (repo override); compliance gate remains enforced.
