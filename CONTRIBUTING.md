@@ -94,6 +94,13 @@ Repo secrets: `PLX_MC_BASE_URL`, `COMPLIANCE_CI_TOKEN`.
 Repo variable: `COMPLIANCE_MODE` (`soft` → `hard` when ready).  
 Enable branch protection on `main` — require PR + checks.
 
-### Routing metadata (shadow)
+### Routing metadata (suggestion)
 
-`.github/workflows/mc-routing-metadata.yml` submits pull-request metadata to MC `/api/routing/propose` via OIDC when org/repo variable `PLX_MC_ROUTING_METADATA_ENABLED=1`. It does not check out or execute PR code. Contract: `.github/plx-mc-routing-manifest.json`. Mode is shadow; fuzzy auto-link stays off. Rollback: set `PLX_MC_ROUTING_METADATA_ENABLED=0` (repo override); compliance gate remains enforced.
+`.github/workflows/mc-routing-metadata.yml` submits pull-request metadata to MC `/api/routing/propose` via OIDC when org/repo variable `PLX_MC_ROUTING_METADATA_ENABLED=1`. It does not check out or execute PR code. Contract: `.github/plx-mc-routing-manifest.json`. Mode is suggestion (safe deep link in the Actions job summary; no candidate dump). Confirmation and fuzzy auto-link stay off. Rollback: set `PLX_MC_ROUTING_METADATA_ENABLED=0` (repo override); compliance gate remains enforced.
+
+### Welcome to Mission Control
+
+Colleague get-started: https://mc.plxcustomer.io/welcome  
+Guide: https://github.com/petralabx/PLX_MC/blob/main/docs/runbooks/mc-for-colleagues.md
+
+On PRs in this repo, the MC routing job may show an **Open Mission Control** suggestion link in the Actions summary. Confirmation and fuzzy auto-link remain off.
