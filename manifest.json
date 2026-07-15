@@ -1,7 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.2.0",
-  "publishedAt": "2026-07-09T15:40:56Z",
+  "version": "1.3.0",
+  "publishedAt": "2026-07-15T16:40:00Z",
   "gitRef": "805c514bcd91f68172d45cee915c04d01f33ff8b",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
@@ -29,6 +29,7 @@
         "isomorphic-refactor",
         "migrate-to-skills",
         "plx-graph-mail",
+        "plx-mc-workstation",
         "pre-plan-recalibrator",
         "project-hardener",
         "project-orchestrator",
@@ -395,6 +396,31 @@
         "ref": "feat/plx-operator-skills-2026-07-09",
         "path": "skills/plx-graph-mail/",
         "importedAt": "2026-07-09T15:40:56Z"
+      }
+    },
+    {
+      "id": "plx-mc-workstation",
+      "name": "plx-mc-workstation",
+      "description": "Guides an agent when provisioning a new PLX Windows workstation or completing that workstation's first governed pull request. Use for workstation setup, PLX-MC access validation, repository bootstrap, and first-PR governance.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/plx-mc-workstation/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "governance",
+        "onboarding",
+        "workflow"
+      ],
+      "owner": "ops@petralabx.com",
+      "submittedBy": "vince@petrasoap.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "main",
+        "path": "skills/plx-mc-workstation/",
+        "importedAt": "2026-07-15T16:40:00Z"
       }
     },
     {
