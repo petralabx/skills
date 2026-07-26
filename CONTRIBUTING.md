@@ -73,11 +73,40 @@ Mission Control milestone IDs when applicable (`MRP-M-*`, `ERP-M-*`, etc.).
 
 ## 5. Validation before merge
 
+Run this before every PR that touches `manifest.json` or any `skills/*/SKILL.md`:
+
 ```bash
-# Validate manifest.json against schemas/manifest.schema.json
+python -m pip install jsonschema pyyaml   # once
+python scripts/validate-manifest.py
 ```
 
-Required GitHub checks: **CI**, **PLX MC Compliance Gate**.
+It validates `manifest.json` against `schemas/manifest.schema.json` and checks it
+against the `skills/` tree: frontmatter parses as YAML, ids match directories,
+no skill directory is missing from the catalog, and **every description is
+byte-identical between `SKILL.md` frontmatter and `manifest.json`**.
+
+GitHub checks on every PR: **Validate manifest and skill frontmatter** (`CI`),
+**compliance**, **drift**, and the routing metadata suggestion job.
+
+### Why descriptions must match exactly
+
+A skill's description lives in two places, read by different consumers:
+
+| Location | Read by |
+|----------|---------|
+| `SKILL.md` frontmatter | the Cursor / Claude agent picker |
+| `manifest.json` entry | the PLX MC skills directory (`mc_list_skills`) |
+
+If they diverge, the same skill advertises different trigger conditions depending
+on which surface an agent sees, so it gets applied inconsistently. Treat the
+frontmatter as the source and copy the **folded** text into `manifest.json`.
+
+Never copy a YAML block-scalar marker (`>-`, `|`) into the JSON. Seven
+descriptions were once reduced to the literal two-character string `">-"` this
+way, and one skill lost 797 characters of guidance. When a description contains
+`": "`, quote it or use a `>-` block — an unquoted `": "` makes YAML read the
+value as a nested mapping and the frontmatter fails to parse, which empties the
+description in the picker.
 
 
 ---
