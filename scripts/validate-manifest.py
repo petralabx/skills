@@ -6,6 +6,9 @@ Cursor/Claude agent picker) and manifest.json (read by the PLX Mission Control
 skills directory). They are required to be byte-identical, because agents on
 different surfaces otherwise get different guidance for the same skill.
 
+Also checks that gitRef names a commit reachable from main, since this repo
+squash-merges and a PR branch commit never enters main's history.
+
 Usage:
     python scripts/validate-manifest.py
 
@@ -17,6 +20,7 @@ from __future__ import annotations
 import io
 import json
 import os
+import subprocess
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -64,8 +68,49 @@ def frontmatter(path: str, skill_id: str):
     return data
 
 
+def git(*args: str) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        ["git", "-C", REPO, *args], capture_output=True, text=True, encoding="utf-8"
+    )
+
+
+def check_gitref(manifest: dict) -> None:
+    """gitRef must name a commit reachable from main.
+
+    This repo squash-merges, so a PR branch commit never enters main's history.
+    gitRef once pointed at one (2ffc785), leaving the published provenance
+    pointer unresolvable from a fresh clone until PR #12 corrected it.
+    """
+    ref = manifest.get("gitRef")
+    if not ref:
+        return
+
+    if git("rev-parse", "--git-dir").returncode != 0:
+        return  # not a git checkout (e.g. extracted tarball); nothing to verify
+    if git("rev-parse", "--is-shallow-repository").stdout.strip() == "true":
+        print("note: shallow clone — skipping gitRef reachability check")
+        return
+    if git("cat-file", "-e", ref + "^{commit}").returncode != 0:
+        fail(f"gitRef {ref[:12]} is not a commit in this repository")
+        return
+
+    for base in ("origin/main", "main"):
+        if git("rev-parse", "--verify", base).returncode != 0:
+            continue
+        if git("merge-base", "--is-ancestor", ref, base).returncode != 0:
+            fail(
+                f"gitRef {ref[:12]} is not reachable from {base}. This repo "
+                "squash-merges, so a PR branch commit never enters main's history — "
+                "stamp the squash commit instead."
+            )
+        return
+
+    print("note: no local main ref — skipping gitRef reachability check")
+
+
 def main() -> int:
     manifest = read_json(MANIFEST, "manifest.json")
+    check_gitref(manifest)
 
     try:
         import jsonschema
