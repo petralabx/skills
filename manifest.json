@@ -1,7 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.3.1",
-  "publishedAt": "2026-07-26T14:41:00Z",
+  "version": "1.3.2",
+  "publishedAt": "2026-07-26T16:30:00Z",
   "gitRef": "be419300a0932607d6b3ba57e592d8ca87db3704",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
@@ -376,7 +376,7 @@
     {
       "id": "plx-graph-mail",
       "name": "plx-graph-mail",
-      "description": "Send email via Microsoft Graph app-only Mail.Send for PLX operator workflows. Default From cos@petrasoap.com; enforces staging.plxcustomer.io URLs.",
+      "description": "Send email via Microsoft Graph app-only Mail.Send for PLX operator workflows. Default From cos@petrasoap.com; use when sending UAT retest mail, quote packs, or ops digests. Enforces staging.plxcustomer.io URLs and never uses the vercel.app git alias. Use on the Windows workstation after sourcing ~/.secrets-env.staging.ps1.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/plx-graph-mail/",
@@ -741,7 +741,7 @@
     {
       "id": "staging-dual-db-migrate",
       "name": "staging-dual-db-migrate",
-      "description": "Apply PLX gold-table / Prisma migrations safely to BOTH plx-postgres-staging and plx-postgres-uat. Never production.",
+      "description": "Apply PLX gold-table / Prisma migrations safely to BOTH plx-postgres-staging and plx-postgres-uat. Use when adding schema, fixing \"relation does not exist\" on staging.plxcustomer.io, UAT remediation migrations, or any change that must land on both agent-writable DBs. Never production.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/staging-dual-db-migrate/",
@@ -788,7 +788,7 @@
     {
       "id": "uat-feedback-batch-fix",
       "name": "uat-feedback-batch-fix",
-      "description": "Diagnose and fix one PLX UAT Feedback session batch: one PR into staging with a plain UAT-Feedback stamp, wait for Ready + mark-ready, then email submitters from cos@petrasoap.com. Does not set Verified.",
+      "description": "Diagnose and fix one PLX UAT Feedback session batch: one PR into staging with a plain UAT-Feedback: <ids> stamp, wait for Vercel Ready + mark-ready, then email submitters from cos@petrasoap.com to retest. Use when given a session batch, a master-prompt pack of UAT tickets, BATCH-WORKER placeholders, or when the weekly UAT loop dispatches a single batch. Does not set Resolution=Verified.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/uat-feedback-batch-fix/",
@@ -836,7 +836,7 @@
     {
       "id": "uat-weekly-batch-loop",
       "name": "uat-weekly-batch-loop",
-      "description": "Run one weekly PLX UAT session-batch cycle: select batches, Vince one-approval, dispatch workers, email after Ready, closeout with WEEKLY-LOG + brain_ingest. Verified-only done.",
+      "description": "Run one weekly PLX UAT session-batch cycle: select ≤5 batches from Open / In Progress / Failed Retest, get Vince's one approval, dispatch one worker session/PR per batch, email submitters after staging Ready, and close the week with WEEKLY-LOG + lessons + brain_ingest. Use when asked to run the weekly UAT loop, process UAT session batches, or /loop the UAT weekly cycle. Done only when tickets reach Resolution=Verified (submitter-driven).",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/uat-weekly-batch-loop/",
@@ -906,7 +906,7 @@
     {
       "id": "worktree-open-session",
       "name": "worktree-open-session",
-      "description": "Create an isolated git worktree off staging for PLX portal work, bootstrap it, open a new Cursor window, and paste PASTE-FIRST/KICKOFF.",
+      "description": "Create an isolated git worktree off staging for PLX portal work, bootstrap it, open a new Cursor window, and paste the project's PASTE-FIRST or KICKOFF prompt. Use when Vince asks for a new worktree/window for a project slug (UAT loop, PD pipeline, quote module, etc.).",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/worktree-open-session/",
