@@ -1,0 +1,5 @@
+# Shell scripts must keep LF endings in the working tree. With core.autocrlf=true
+# a Windows checkout rewrites them to CRLF, and bash then reads the trailing \r as
+# part of the command: `set -euo pipefail` fails with "set: pipefail: invalid
+# option name" before the script does anything.
+*.sh text eol=lf
