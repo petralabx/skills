@@ -82,8 +82,9 @@
         },
         "description": {
           "type": "string",
+          "minLength": 40,
           "maxLength": 1024,
-          "description": "Short trigger description for agent runtimes."
+          "description": "Short trigger description for agent runtimes. Must be byte-identical to the SKILL.md frontmatter description; scripts/validate-manifest.py enforces this. The lower bound rejects truncated values and stray YAML block-scalar markers such as \">-\", which cannot tell an agent when to apply a skill."
         },
         "status": {
           "type": "string",
