@@ -45,13 +45,13 @@ Clone this repo once, then run the sync (idempotent — re-run any time to updat
 
 Windows (PowerShell):
 
-    git clone https://github.com/Petra-Lab-X/skills.git $HOME/petra-lab-x-skills
-    & $HOME/petra-lab-x-skills/scripts/sync-skills.ps1
+    git clone https://github.com/petralabx/skills.git $HOME/petralabx-skills
+    & $HOME/petralabx-skills/scripts/sync-skills.ps1
 
 macOS / Linux:
 
-    git clone https://github.com/Petra-Lab-X/skills.git ~/petra-lab-x-skills
-    bash ~/petra-lab-x-skills/scripts/sync-skills.sh
+    git clone https://github.com/petralabx/skills.git ~/petralabx-skills
+    bash ~/petralabx-skills/scripts/sync-skills.sh
 
 The sync `git pull`s the latest and copies each `skills/<name>` into both
 `~/.cursor/skills/<name>` and `~/.claude/skills/<name>`.
