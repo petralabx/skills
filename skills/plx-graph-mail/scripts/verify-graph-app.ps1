@@ -40,9 +40,12 @@ param(
   # The token is the only reliable evidence of effective permission. Removing a
   # permission in App registrations does not always revoke the existing consent
   # grant on the enterprise application, so the role can survive the removal.
+  # Mail.Read is deliberate, not drift: retained by operator decision 2026-07-27.
+  # It is not needed to send, and the RestrictAccess policy bounds which mailboxes
+  # it can reach, so the read-denied probe below still has to pass.
   [string[]]$ExpectedRoles = @(
     'Files.ReadWrite.All', 'Sites.ReadWrite.All', 'Sites.Manage.All',
-    'Mail.Send', 'Mail.ReadWrite'
+    'Mail.Send', 'Mail.ReadWrite', 'Mail.Read'
   ),
   [switch]$SkipSend
 )
