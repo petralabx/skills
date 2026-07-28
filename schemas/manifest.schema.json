@@ -4,6 +4,7 @@
   "title": "PLX Cursor Skills Manifest",
   "description": "Canonical catalog for the plx-cursor-skills content repository. Indexed by PLX Mission Control Skills Directory.",
   "type": "object",
+  "$comment": "There is deliberately no gitRef property. A manifest cannot name the commit that contains it - the sha does not exist until the commit is made - so any in-file value is stale by construction. Consumers resolve provenance from the ref they fetched, and releases are marked by the v<version> tag. additionalProperties:false blocks re-adding it; scripts/validate-manifest.py explains why.",
   "additionalProperties": false,
   "required": ["schemaVersion", "version", "publishedAt", "skills"],
   "properties": {
@@ -20,10 +21,6 @@
       "type": "string",
       "format": "date-time",
       "description": "UTC ISO-8601 when this manifest was published."
-    },
-    "gitRef": {
-      "type": "string",
-      "description": "Git commit SHA or tag this manifest describes."
     },
     "repo": {
       "type": "string",

@@ -6,8 +6,10 @@ Cursor/Claude agent picker) and manifest.json (read by the PLX Mission Control
 skills directory). They are required to be byte-identical, because agents on
 different surfaces otherwise get different guidance for the same skill.
 
-Also checks that gitRef names a commit reachable from main, since this repo
-squash-merges and a PR branch commit never enters main's history.
+Also enforces release hygiene: a change to the catalog or to any skill must bump
+manifest.version, and a version that already has a v<version> tag cannot be
+reused. Those two facts are checkable while the PR is open, which the old gitRef
+reachability check never was — see check_release_hygiene.
 
 Usage:
     python scripts/validate-manifest.py
@@ -74,43 +76,73 @@ def git(*args: str) -> subprocess.CompletedProcess:
     )
 
 
-def check_gitref(manifest: dict) -> None:
-    """gitRef must name a commit reachable from main.
+def check_no_gitref(manifest: dict) -> None:
+    """The manifest must not carry a gitRef.
 
-    This repo squash-merges, so a PR branch commit never enters main's history.
-    gitRef once pointed at one (2ffc785), leaving the published provenance
-    pointer unresolvable from a fresh clone until PR #12 corrected it.
+    A file cannot name the commit that contains it: the sha does not exist until
+    the commit is made, so any value written here is stale by construction and
+    every version bump ships one that lags. This field was stamped by hand and by
+    the MC publish flow, and both produced refs that pointed at the tree *before*
+    the one they described — a v1.3.1 commit advertised alongside a v1.4.0 tree.
+
+    Provenance now comes from the ref a consumer actually fetched, and releases
+    are marked by the v<version> tag this repo pushes on merge.
     """
-    ref = manifest.get("gitRef")
-    if not ref:
-        return
+    if "gitRef" in manifest:
+        fail(
+            "manifest.json must not contain gitRef. A manifest cannot name its own "
+            "commit, so the value is always stale; provenance is the ref the "
+            "consumer fetched, and the release marker is the v<version> tag."
+        )
 
+
+def check_release_hygiene(manifest: dict) -> None:
+    """Touching the catalog requires a version bump, and versions are single-use.
+
+    Neither fact needs the commit sha, so unlike the gitRef reachability check
+    this replaces, both can be decided while the PR is still open.
+    """
     if git("rev-parse", "--git-dir").returncode != 0:
-        return  # not a git checkout (e.g. extracted tarball); nothing to verify
-    if git("rev-parse", "--is-shallow-repository").stdout.strip() == "true":
-        print("note: shallow clone — skipping gitRef reachability check")
-        return
-    if git("cat-file", "-e", ref + "^{commit}").returncode != 0:
-        fail(f"gitRef {ref[:12]} is not a commit in this repository")
+        return  # not a git checkout (e.g. extracted tarball)
+    if git("rev-parse", "--verify", "origin/main").returncode != 0:
+        print("note: no origin/main ref — skipping release hygiene checks")
         return
 
-    for base in ("origin/main", "main"):
-        if git("rev-parse", "--verify", base).returncode != 0:
-            continue
-        if git("merge-base", "--is-ancestor", ref, base).returncode != 0:
+    version = manifest.get("version", "")
+
+    base_manifest = git("show", "origin/main:manifest.json")
+    if base_manifest.returncode == 0:
+        try:
+            base_version = json.loads(base_manifest.stdout).get("version", "")
+        except json.JSONDecodeError:
+            base_version = ""
+
+        # Diff the working tree against the merge base, not origin/main...HEAD.
+        # The latter only sees committed work, which makes this check silently
+        # inert in the case it matters most: an author running it before commit.
+        merge_base = git("merge-base", "origin/main", "HEAD").stdout.strip() or "origin/main"
+        changed = git("diff", "--name-only", merge_base, "--", "manifest.json", "skills/")
+        touched = [line for line in changed.stdout.splitlines() if line.strip()]
+
+        if touched and version and version == base_version:
             fail(
-                f"gitRef {ref[:12]} is not reachable from {base}. This repo "
-                "squash-merges, so a PR branch commit never enters main's history — "
-                "stamp the squash commit instead."
+                f"version is still {version} but {len(touched)} catalog file(s) changed "
+                f"(e.g. {touched[0]}). Consumers pin by version, so an unbumped release "
+                "is invisible to them. Bump manifest.version."
             )
-        return
-
-    print("note: no local main ref — skipping gitRef reachability check")
+        if version and version != base_version:
+            existing = git("rev-parse", "-q", "--verify", f"refs/tags/v{version}")
+            if existing.returncode == 0:
+                fail(
+                    f"v{version} is already tagged at {existing.stdout.strip()[:12]}. A "
+                    "released version is immutable — choose the next version instead."
+                )
 
 
 def main() -> int:
     manifest = read_json(MANIFEST, "manifest.json")
-    check_gitref(manifest)
+    check_no_gitref(manifest)
+    check_release_hygiene(manifest)
 
     try:
         import jsonschema

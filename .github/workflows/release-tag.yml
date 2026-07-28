@@ -1,0 +1,71 @@
+# Tags each merge to main with v<manifest.version>.
+#
+# This replaces stamping a commit sha into manifest.json. A file cannot name the
+# commit that contains it, so that stamp was stale by construction and every
+# version bump shipped one that lagged — at one point advertising a 39-skill tree
+# behind a 69-skill release. A tag has no such problem: it is applied after the
+# commit exists, from outside the file.
+#
+# Creating a tag is not a commit, so main is never written to and there is no
+# risk of a workflow retriggering itself.
+
+name: Release tag
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-tag
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    name: Tag main with the manifest version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Resolve manifest version
+        id: manifest
+        run: |
+          version="$(python -c 'import json;print(json.load(open("manifest.json"))["version"])')"
+          if [ -z "$version" ]; then
+            echo "manifest.json has no version" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Create or verify the release tag
+        env:
+          TAG: ${{ steps.manifest.outputs.tag }}
+        run: |
+          set -euo pipefail
+          existing="$(git rev-list -n1 "$TAG" 2>/dev/null || true)"
+
+          if [ -z "$existing" ]; then
+            git tag -a "$TAG" -m "petralabx/skills $TAG"
+            git push origin "$TAG"
+            echo "created $TAG at $(git rev-parse --short HEAD)"
+            exit 0
+          fi
+
+          if [ "$existing" = "$GITHUB_SHA" ]; then
+            echo "$TAG already points at this commit; nothing to do"
+            exit 0
+          fi
+
+          # The version was reused after being released. Moving the tag would
+          # silently change what every consumer pinned to it receives, so fail
+          # instead and let a human decide.
+          echo "::error::$TAG already exists at ${existing:0:12} but main is now $GITHUB_SHA." >&2
+          echo "A released version is immutable. Bump manifest.version instead of reusing it." >&2
+          exit 1

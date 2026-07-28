@@ -85,8 +85,24 @@ against the `skills/` tree: frontmatter parses as YAML, ids match directories,
 no skill directory is missing from the catalog, and **every description is
 byte-identical between `SKILL.md` frontmatter and `manifest.json`**.
 
+It also enforces two release rules: **changing the catalog or any skill requires
+bumping `manifest.version`**, and **a version that already has a `v<version>` tag
+cannot be reused**. Consumers pin by version, so an unbumped change is invisible
+to them, and moving a released tag would silently change what everyone pinned to
+it receives.
+
 GitHub checks on every PR: **Validate manifest and skill frontmatter** (`CI`),
 **compliance**, **drift**, and the routing metadata suggestion job.
+
+### Releases are tagged, not stamped
+
+On merge to `main`, the **Release tag** workflow tags the commit `v<version>`
+from `manifest.json`. Do not add a `gitRef` field to the manifest — the schema
+rejects it. A file cannot name the commit that contains it, because the sha does
+not exist until the commit is made, so such a stamp is stale by construction and
+every version bump ships one that lags. At one point the stamp named a 39-skill
+commit while the release served 69. Consumers resolve provenance from the ref
+they fetched; the tag is the human-readable release marker.
 
 ### Why descriptions must match exactly
 

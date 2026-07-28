@@ -26,8 +26,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # Full history so the gitRef reachability check can resolve commits.
+          # Full history and tags so the release-hygiene checks can diff against
+          # origin/main and see whether v<version> is already taken.
           fetch-depth: 0
+          fetch-tags: true
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
