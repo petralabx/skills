@@ -1,8 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.4.0",
-  "publishedAt": "2026-07-26T19:35:00Z",
-  "gitRef": "d6ceea07bcd71b62b3dc1eec1357f43584ebca05",
+  "version": "1.4.1",
+  "publishedAt": "2026-07-28T12:30:00Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
   "maintainers": [
