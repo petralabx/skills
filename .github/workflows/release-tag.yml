@@ -52,6 +52,10 @@ jobs:
           existing="$(git rev-list -n1 "$TAG" 2>/dev/null || true)"
 
           if [ -z "$existing" ]; then
+            # An annotated tag records a tagger, and the runner has no git
+            # identity, so `git tag -a` aborts with "empty ident name".
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git tag -a "$TAG" -m "petralabx/skills $TAG"
             git push origin "$TAG"
             echo "created $TAG at $(git rev-parse --short HEAD)"
