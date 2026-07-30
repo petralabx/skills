@@ -1,7 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.4.1",
-  "publishedAt": "2026-07-28T12:30:00Z",
+  "version": "1.4.2",
+  "publishedAt": "2026-07-30T12:00:00Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
   "maintainers": [
@@ -59,6 +59,7 @@
         "create-subagent",
         "cursor-inbox-bridge",
         "frontend-slides",
+        "guided-project-discovery",
         "hard-truth-analyst",
         "hyperframes-design-pipeline",
         "kap",
@@ -1140,6 +1141,24 @@
         "path": "~/.cursor/skills/frontend-slides/",
         "importedAt": "2026-07-14T14:10:18Z"
       }
+    },
+    {
+      "id": "guided-project-discovery",
+      "name": "guided-project-discovery",
+      "description": "Interview a vague project into a decision-ready brief one lens at a time, keep a resumable discovery ledger, then route it to research, plan, or execute mode behind a collaborative review gate that binds reviewer approval to an exact frozen candidate. Use when the user says \"help me scope this\", \"interview me about this project\", \"I have an idea but haven't thought it through\", or hands over an initiative that needs discovery and reviewer sign-off before anything gets built.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/guided-project-discovery/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "project-lifecycle",
+        "planning",
+        "review"
+      ],
+      "owner": "ops@petralabx.com"
     },
     {
       "id": "hard-truth-analyst",
