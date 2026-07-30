@@ -1,6 +1,6 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.4.2",
+  "version": "1.5.0",
   "publishedAt": "2026-07-30T12:00:00Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
@@ -28,6 +28,7 @@
         "isomorphic-refactor",
         "migrate-to-skills",
         "plx-graph-mail",
+        "plx-knowledge-video",
         "plx-mc-workstation",
         "pre-plan-recalibrator",
         "project-hardener",
@@ -426,6 +427,31 @@
         "ref": "feat/plx-operator-skills-2026-07-09",
         "path": "skills/plx-graph-mail/",
         "importedAt": "2026-07-09T15:40:56Z"
+      }
+    },
+    {
+      "id": "plx-knowledge-video",
+      "name": "plx-knowledge-video",
+      "description": "Produce a PLX Knowledge Hub video package for a Portal or VMC workflow — a narrated, captioned MP4 with smart zooms and control-point annotations, a matching SRT, a How-To Markdown page, and a metadata.yml — by orchestrating the demo-studio skills with an Executive and Finance tone. Use when the user asks to record, film, publish, or refresh a Knowledge Hub how-to, onboarding, or product video for a PLX Portal or VMC flow.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/plx-knowledge-video/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "documentation",
+        "knowledge-hub",
+        "video",
+        "workflow"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "petralabx/skills",
+        "ref": "main",
+        "path": "skills/plx-knowledge-video/",
+        "importedAt": "2026-07-30T12:00:00Z"
       }
     },
     {
