@@ -80,6 +80,18 @@ two never drift.
 See `reference.md` for the `how-to.md` frontmatter contract and the `metadata.yml`
 schema, plus the process-outline format.
 
+### Repeatable capture pipeline (`pipeline/`)
+
+For a reliable, one-command-per-beat capture of a **live** app, use the committed
+`pipeline/` (narration-first, per-beat clean capture). It fixes the two failure modes
+of naive screen-recording: it **never captures page-load white screens** (each beat is
+loaded off-camera before recording) and it **passes demo-studio's compose FPS gate on
+static pages** via an `activeHold` cursor drift. Each beat is recorded at its own
+narration length and stitched with no global time-stretch. Full instructions,
+one-time setup, and the working P2P example config are in
+[`pipeline/README.md`](pipeline/README.md) (`capture-beat.mjs`, `narrate-beats.mjs`,
+`assemble.sh`, `beats.example.json`, `demo.config.example.json`).
+
 ## Quality gate (self-review before delivering)
 
 - Does the narration read for executives and finance (control/visibility, not clicks)?
