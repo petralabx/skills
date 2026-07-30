@@ -103,7 +103,7 @@ non-goals are written down. Then set `status: ready-for-review`.
 Validate the ledger before offering it for review:
 
 ```bash
-bash skills/guided-project-discovery/scripts/discovery-validate.sh .discovery/<slug>/DISCOVERY.md
+bash .cursor/skills/guided-project-discovery/scripts/discovery-validate.sh .discovery/<slug>/DISCOVERY.md
 ```
 
 ### Stage 3 — Mode and authorities
@@ -147,7 +147,7 @@ Mandatory for every mode. The full contract is in
 Validate a review round before claiming a verdict:
 
 ```bash
-bash skills/guided-project-discovery/scripts/review-validate.sh .discovery/<slug>/review/round-<n>.md
+bash .cursor/skills/guided-project-discovery/scripts/review-validate.sh .discovery/<slug>/review/round-<n>.md
 ```
 
 ### Stage 5 — Handoff

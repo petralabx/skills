@@ -29,7 +29,7 @@ A **candidate** is a frozen snapshot of the discovery ledger offered for review.
 Compute and verify a digest:
 
 ```bash
-bash scripts/review-validate.sh --digest .discovery/<slug>/candidates/<digest>/CANDIDATE.md
+bash .cursor/skills/guided-project-discovery/scripts/review-validate.sh --digest .discovery/<slug>/candidates/<digest>/CANDIDATE.md
 ```
 
 If the recomputed digest does not equal the directory name, the candidate has

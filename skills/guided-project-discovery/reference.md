@@ -128,22 +128,28 @@ present what is known.
 
 ```bash
 # ledger schema, lens-table invariants, cursor resolvability
-bash skills/guided-project-discovery/scripts/discovery-validate.sh .discovery/<slug>/DISCOVERY.md
+bash .cursor/skills/guided-project-discovery/scripts/discovery-validate.sh .discovery/<slug>/DISCOVERY.md
 
 # review round: provenance, dispositions, candidate-bound approvals, execution prohibition
-bash skills/guided-project-discovery/scripts/review-validate.sh .discovery/<slug>/review/round-<n>.md
+bash .cursor/skills/guided-project-discovery/scripts/review-validate.sh .discovery/<slug>/review/round-<n>.md
 
 # both validators against the bundled samples
-bash skills/guided-project-discovery/scripts/discovery-validate.sh --selftest
-bash skills/guided-project-discovery/scripts/review-validate.sh --selftest
+bash .cursor/skills/guided-project-discovery/scripts/discovery-validate.sh --selftest
+bash .cursor/skills/guided-project-discovery/scripts/review-validate.sh --selftest
 
 # five pilot scenarios, including the two that must fail
-bash skills/guided-project-discovery/scripts/pilots-run.sh
+bash .cursor/skills/guided-project-discovery/scripts/pilots-run.sh
 ```
 
-The validators resolve paths relative to the script when given `--selftest`, so
-they work both in this repository and in a consuming repo that installed the
-skill under `.cursor/skills/`.
+Paths above are the installed layout, which is where the skill runs: Cursor
+Cloud's `/` picker is project-scoped and reads `.cursor/skills/` in the repo the
+session launched against. Inside the `petralabx/skills` catalog itself the same
+scripts live under `skills/guided-project-discovery/scripts/` — substitute that
+prefix when validating a change to the skill before publishing it.
+
+Either way the scripts resolve `--selftest` and their bundled samples relative to
+the script rather than the working directory, so both layouts work without
+arguments.
 
 ## 6. Model Roles
 
