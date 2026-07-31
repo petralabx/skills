@@ -85,6 +85,10 @@ for repo in "${REPOS[@]}"; do
     rm -rf "$dest/.cursor/skills/$name"
     cp -R "$d" "$dest/.cursor/skills/$name"
   done
+  # Stage before parity so the checker can compare Git modes as well as bytes.
+  # This catches Windows-authored consumer copies that silently turn 100755
+  # validators into 100644 files and then fail under Linux with exit 126.
+  git -C "$dest" add .cursor/skills
   "${python_cmd[@]}" "$repo_root/scripts/check-consumer-parity.py" \
     --consumer-root "$dest"
   cat > "$dest/.cursor/skills/README.md" <<EOF

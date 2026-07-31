@@ -99,11 +99,11 @@ python scripts/check-consumer-parity.py --selftest
 scripts/distribute-to-repos.sh --check --repos plx-customer-portal,PLX_MC
 ```
 
-The first command must report a known-bad `RED exit=1` followed by
-`GREEN exit=0`. The second command clones each configured integration branch and
-compares every package skill byte-for-byte with its `.cursor/skills/` copy. Run
-the distributor without `--check` to create/update consumer branches, then rerun
-the live check after those PRs merge.
+The first command must report a known-bad content `RED exit=1`, an executable-bit
+`MODE_RED exit=1`, and then `GREEN exit=0`. The second command clones each
+configured integration branch and compares every package skill's bytes and Git
+mode with its `.cursor/skills/` copy. Run the distributor without `--check` to
+create/update consumer branches, then rerun the live check after those PRs merge.
 
 GitHub checks on every PR: **Validate manifest and skill frontmatter** (`CI`),
 **compliance**, **drift**, and the routing metadata suggestion job.
