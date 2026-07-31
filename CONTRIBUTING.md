@@ -91,6 +91,20 @@ cannot be reused**. Consumers pin by version, so an unbumped change is invisible
 to them, and moving a released tag would silently change what everyone pinned to
 it receives.
 
+For project-scoped Cursor copies, prove the parity checker itself and then compare
+the live consumer branches:
+
+```bash
+python scripts/check-consumer-parity.py --selftest
+scripts/distribute-to-repos.sh --check --repos plx-customer-portal,PLX_MC
+```
+
+The first command must report a known-bad `RED exit=1` followed by
+`GREEN exit=0`. The second command clones each configured integration branch and
+compares every package skill byte-for-byte with its `.cursor/skills/` copy. Run
+the distributor without `--check` to create/update consumer branches, then rerun
+the live check after those PRs merge.
+
 GitHub checks on every PR: **Validate manifest and skill frontmatter** (`CI`),
 **compliance**, **drift**, and the routing metadata suggestion job.
 

@@ -6,7 +6,7 @@ wrong. Each has a checked-in artifact under [pilots/](pilots/) and an expected
 outcome asserted by [scripts/pilots-run.sh](../scripts/pilots-run.sh).
 
 ```bash
-bash skills/guided-project-discovery/scripts/pilots-run.sh
+bash .cursor/skills/guided-project-discovery/scripts/pilots-run.sh
 ```
 
 Three fixtures must validate and **two must be rejected**. The negative cases are
