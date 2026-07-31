@@ -27,6 +27,36 @@ def files_below(root: Path) -> dict[str, Path]:
     }
 
 
+def git_root(path: Path) -> Path | None:
+    result = subprocess.run(
+        ["git", "-C", str(path), "rev-parse", "--show-toplevel"],
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+    )
+    if result.returncode != 0:
+        return None
+    return Path(result.stdout.strip()).resolve()
+
+
+def git_index_modes(repo: Path | None) -> dict[str, str]:
+    if repo is None:
+        return {}
+    result = subprocess.run(
+        ["git", "-C", str(repo), "ls-files", "--stage", "-z"],
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        return {}
+    modes: dict[str, str] = {}
+    for record in result.stdout.decode("utf-8").split("\0"):
+        if not record:
+            continue
+        metadata, path = record.split("\t", 1)
+        modes[path] = metadata.split(" ", 1)[0]
+    return modes
+
+
 def package_skill_ids(manifest: Path, package_id: str) -> list[str]:
     data = json.loads(manifest.read_text(encoding="utf-8"))
     package = next(
@@ -38,7 +68,15 @@ def package_skill_ids(manifest: Path, package_id: str) -> list[str]:
     return list(package.get("skillIds", []))
 
 
-def compare_skill(source: Path, consumer: Path, skill_id: str) -> list[str]:
+def compare_skill(
+    source: Path,
+    consumer: Path,
+    skill_id: str,
+    source_repo: Path | None,
+    consumer_repo: Path | None,
+    source_modes: dict[str, str],
+    consumer_modes: dict[str, str],
+) -> list[str]:
     source_dir = source / skill_id
     consumer_dir = consumer / ".cursor" / "skills" / skill_id
     if not source_dir.is_dir():
@@ -61,6 +99,27 @@ def compare_skill(source: Path, consumer: Path, skill_id: str) -> list[str]:
         for relative in sorted(source_files.keys() & consumer_files.keys())
         if digest(source_files[relative]) != digest(consumer_files[relative])
     )
+    for relative in sorted(source_files.keys() & consumer_files.keys()):
+        if source_repo is None:
+            continue
+        source_path = source_files[relative].resolve().relative_to(source_repo).as_posix()
+        source_mode = source_modes.get(source_path)
+        if source_mode is None:
+            continue
+        if consumer_repo is None:
+            problems.append(f"{skill_id}: consumer is not a Git checkout: {relative}")
+            continue
+        consumer_path = (
+            consumer_files[relative].resolve().relative_to(consumer_repo).as_posix()
+        )
+        consumer_mode = consumer_modes.get(consumer_path)
+        if consumer_mode is None:
+            problems.append(f"{skill_id}: consumer file is not tracked: {relative}")
+        elif consumer_mode != source_mode:
+            problems.append(
+                f"{skill_id}: mode differs: {relative} "
+                f"(source {source_mode}, consumer {consumer_mode})"
+            )
     return problems
 
 
@@ -68,10 +127,22 @@ def run_check(
     source: Path, consumer: Path, manifest: Path, package_id: str, skill_ids: list[str]
 ) -> int:
     selected = skill_ids or package_skill_ids(manifest, package_id)
+    source_repo = git_root(source)
+    consumer_repo = git_root(consumer)
+    source_modes = git_index_modes(source_repo)
+    consumer_modes = git_index_modes(consumer_repo)
     problems = [
         problem
         for skill_id in selected
-        for problem in compare_skill(source, consumer, skill_id)
+        for problem in compare_skill(
+            source,
+            consumer,
+            skill_id,
+            source_repo,
+            consumer_repo,
+            source_modes,
+            consumer_modes,
+        )
     ]
     if problems:
         print("consumer skill parity failed:", file=sys.stderr)
@@ -94,6 +165,7 @@ def selftest() -> int:
         consumer_skill.mkdir(parents=True)
         (source_skill / "SKILL.md").write_text("canonical\n", encoding="utf-8")
         (source_skill / "reference.md").write_text("reference\n", encoding="utf-8")
+        (source_skill / "run.sh").write_text("#!/usr/bin/env bash\n", encoding="utf-8")
         (consumer_skill / "SKILL.md").write_text("stale\n", encoding="utf-8")
         manifest.write_text(
             json.dumps(
@@ -104,6 +176,20 @@ def selftest() -> int:
                 }
             ),
             encoding="utf-8",
+        )
+        for repo in (root / "catalog", consumer):
+            subprocess.run(["git", "-C", str(repo), "init", "-q"], check=True)
+            subprocess.run(["git", "-C", str(repo), "add", "-A"], check=True)
+        subprocess.run(
+            [
+                "git",
+                "-C",
+                str(root / "catalog"),
+                "update-index",
+                "--chmod=+x",
+                "skills/demo/run.sh",
+            ],
+            check=True,
         )
 
         command = [
@@ -126,6 +212,29 @@ def selftest() -> int:
 
         shutil.rmtree(consumer_skill)
         shutil.copytree(source_skill, consumer_skill)
+        subprocess.run(["git", "-C", str(consumer), "add", "-A"], check=True)
+        mode_red = subprocess.run(command, capture_output=True, text=True)
+        print(f"selftest MODE_RED exit={mode_red.returncode}")
+        if mode_red.returncode != 1 or "mode differs" not in mode_red.stderr:
+            print(mode_red.stdout, end="")
+            print(mode_red.stderr, end="", file=sys.stderr)
+            print(
+                "selftest failed: non-executable consumer did not fail as expected",
+                file=sys.stderr,
+            )
+            return 1
+
+        subprocess.run(
+            [
+                "git",
+                "-C",
+                str(consumer),
+                "update-index",
+                "--chmod=+x",
+                ".cursor/skills/demo/run.sh",
+            ],
+            check=True,
+        )
         green = subprocess.run(command, capture_output=True, text=True)
         print(f"selftest GREEN exit={green.returncode}")
         if green.returncode != 0:
