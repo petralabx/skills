@@ -264,8 +264,9 @@ for repo in "${REPOS[@]}"; do
 
   write_readme "$dest" "$repo" "$base"
 
-  # Stage before parity so the checker can compare Git modes as well as bytes.
-  git -C "$dest" add .cursor/skills
+  # Force-add: consumer *.log / similar ignores must not drop catalog fixtures
+  # (e.g. vmc-autopilot-oneshot/**/commands.log) or mode parity breaks.
+  git -C "$dest" add -f .cursor/skills
 
   parity_args=("$repo_root/scripts/check-consumer-parity.py" --consumer-root "$dest")
   if [[ "$repo" == "plx-customer-portal" ]]; then
@@ -276,7 +277,7 @@ for repo in "${REPOS[@]}"; do
   fi
   "${python_cmd[@]}" "${parity_args[@]}"
 
-  git -C "$dest" add .cursor/skills
+  git -C "$dest" add -f .cursor/skills
   if git -C "$dest" diff --cached --quiet; then
     echo "no changes"
     continue
