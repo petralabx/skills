@@ -69,21 +69,21 @@ else
 fi
 
 if [[ -z "$package_version" ]]; then
-  package_version="$("${python_cmd[@]}" - <<'PY' "$manifest"
-import json, sys
-print(json.load(open(sys.argv[1], encoding="utf-8")).get("version", "unknown"))
-PY
-)"
+  package_version="$(
+    "${python_cmd[@]}" -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8")).get("version", "unknown"))' \
+      "$manifest"
+  )"
 fi
 
-mapfile -t PACKAGE_SKILLS < <("${python_cmd[@]}" - <<'PY' "$manifest"
+mapfile -t PACKAGE_SKILLS < <(
+  "${python_cmd[@]}" -c '
 import json, sys
 data = json.load(open(sys.argv[1], encoding="utf-8"))
 pkg = next(p for p in data.get("packages", []) if p.get("id") == "plx-engineering-core")
 for skill_id in pkg.get("skillIds", []):
     print(skill_id)
-PY
-)"
+' "$manifest"
+)
 [[ "${#PACKAGE_SKILLS[@]}" -gt 0 ]] || {
   echo "no skillIds found for plx-engineering-core in $manifest" >&2
   exit 1
