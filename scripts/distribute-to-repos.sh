@@ -241,9 +241,12 @@ for repo in "${REPOS[@]}"; do
   fi
 
   if [[ "$check_only" -eq 1 ]]; then
-    parity_args=("$repo_root/scripts/check-consumer-parity.py" --consumer-root "$dest")
+    parity_args=(
+      "$repo_root/scripts/check-consumer-parity.py"
+      --consumer-root "$dest"
+      --allow-extra-consumer-files
+    )
     if [[ "$repo" == "plx-customer-portal" ]]; then
-      parity_args+=(--allow-extra-consumer-files)
       for s in "${PORTAL_OVERLAY_SKILLS[@]}"; do
         parity_args+=(--allow-content-diff-skill "$s")
       done
@@ -268,9 +271,14 @@ for repo in "${REPOS[@]}"; do
   # (e.g. vmc-autopilot-oneshot/**/commands.log) or mode parity breaks.
   git -C "$dest" add -f .cursor/skills
 
-  parity_args=("$repo_root/scripts/check-consumer-parity.py" --consumer-root "$dest")
+  # Always allow extras: distribute preserves unexpected consumer-only files
+  # (PLX_MC and portal both carry capabilities-deck overlays).
+  parity_args=(
+    "$repo_root/scripts/check-consumer-parity.py"
+    --consumer-root "$dest"
+    --allow-extra-consumer-files
+  )
   if [[ "$repo" == "plx-customer-portal" ]]; then
-    parity_args+=(--allow-extra-consumer-files)
     for s in "${PORTAL_OVERLAY_SKILLS[@]}"; do
       parity_args+=(--allow-content-diff-skill "$s")
     done
