@@ -76,6 +76,9 @@ def compare_skill(
     consumer_repo: Path | None,
     source_modes: dict[str, str],
     consumer_modes: dict[str, str],
+    *,
+    allow_extra_consumer_files: bool = False,
+    allow_content_diff_skills: set[str] | None = None,
 ) -> list[str]:
     source_dir = source / skill_id
     consumer_dir = consumer / ".cursor" / "skills" / skill_id
@@ -90,17 +93,20 @@ def compare_skill(
         f"{skill_id}: consumer file missing: {relative}"
         for relative in sorted(source_files.keys() - consumer_files.keys())
     ]
-    problems.extend(
-        f"{skill_id}: unexpected consumer file: {relative}"
-        for relative in sorted(consumer_files.keys() - source_files.keys())
-    )
-    problems.extend(
-        f"{skill_id}: content differs: {relative}"
-        for relative in sorted(source_files.keys() & consumer_files.keys())
-        if digest(source_files[relative]) != digest(consumer_files[relative])
-    )
+    if not allow_extra_consumer_files:
+        problems.extend(
+            f"{skill_id}: unexpected consumer file: {relative}"
+            for relative in sorted(consumer_files.keys() - source_files.keys())
+        )
+    skip_content = skill_id in (allow_content_diff_skills or set())
+    if not skip_content:
+        problems.extend(
+            f"{skill_id}: content differs: {relative}"
+            for relative in sorted(source_files.keys() & consumer_files.keys())
+            if digest(source_files[relative]) != digest(consumer_files[relative])
+        )
     for relative in sorted(source_files.keys() & consumer_files.keys()):
-        if source_repo is None:
+        if skip_content or source_repo is None:
             continue
         source_path = source_files[relative].resolve().relative_to(source_repo).as_posix()
         source_mode = source_modes.get(source_path)
@@ -124,7 +130,14 @@ def compare_skill(
 
 
 def run_check(
-    source: Path, consumer: Path, manifest: Path, package_id: str, skill_ids: list[str]
+    source: Path,
+    consumer: Path,
+    manifest: Path,
+    package_id: str,
+    skill_ids: list[str],
+    *,
+    allow_extra_consumer_files: bool = False,
+    allow_content_diff_skills: set[str] | None = None,
 ) -> int:
     selected = skill_ids or package_skill_ids(manifest, package_id)
     source_repo = git_root(source)
@@ -142,6 +155,8 @@ def run_check(
             consumer_repo,
             source_modes,
             consumer_modes,
+            allow_extra_consumer_files=allow_extra_consumer_files,
+            allow_content_diff_skills=allow_content_diff_skills,
         )
     ]
     if problems:
@@ -149,7 +164,8 @@ def run_check(
         for problem in problems:
             print(f"- {problem}", file=sys.stderr)
         return 1
-    print(f"consumer skill parity passed: {len(selected)} skill(s)")
+    extras_note = " (extras allowed)" if allow_extra_consumer_files else ""
+    print(f"consumer skill parity passed: {len(selected)} skill(s){extras_note}")
     return 0
 
 
@@ -243,6 +259,47 @@ def selftest() -> int:
             print("selftest failed: synced consumer did not pass", file=sys.stderr)
             return 1
 
+        (consumer_skill / "overlay.txt").write_text("portal-only\n", encoding="utf-8")
+        subprocess.run(["git", "-C", str(consumer), "add", "-A"], check=True)
+        # Re-assert executable mode after staging the overlay — `git add` can
+        # re-record working-tree mode on platforms that drop +x.
+        subprocess.run(
+            [
+                "git",
+                "-C",
+                str(consumer),
+                "update-index",
+                "--chmod=+x",
+                ".cursor/skills/demo/run.sh",
+            ],
+            check=True,
+        )
+        extras_red = subprocess.run(command, capture_output=True, text=True)
+        print(f"selftest EXTRAS_RED exit={extras_red.returncode}")
+        if extras_red.returncode != 1 or "unexpected consumer file" not in extras_red.stderr:
+            print(extras_red.stdout, end="")
+            print(extras_red.stderr, end="", file=sys.stderr)
+            print(
+                "selftest failed: unexpected consumer file did not fail as expected",
+                file=sys.stderr,
+            )
+            return 1
+
+        extras_green = subprocess.run(
+            [*command, "--allow-extra-consumer-files"],
+            capture_output=True,
+            text=True,
+        )
+        print(f"selftest EXTRAS_GREEN exit={extras_green.returncode}")
+        if extras_green.returncode != 0:
+            print(extras_green.stdout, end="")
+            print(extras_green.stderr, end="", file=sys.stderr)
+            print(
+                "selftest failed: --allow-extra-consumer-files did not pass",
+                file=sys.stderr,
+            )
+            return 1
+
     print("consumer parity selftest passed")
     return 0
 
@@ -255,6 +312,24 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path, default=repo_root / "manifest.json")
     parser.add_argument("--package-id", default="plx-engineering-core")
     parser.add_argument("--skill", action="append", default=[])
+    parser.add_argument(
+        "--allow-extra-consumer-files",
+        action="store_true",
+        help=(
+            "Do not fail when a consumer skill directory contains files absent "
+            "from the catalog (portal overlays under capabilities-deck/, etc.)."
+        ),
+    )
+    parser.add_argument(
+        "--allow-content-diff-skill",
+        action="append",
+        default=[],
+        metavar="SKILL_ID",
+        help=(
+            "Skip content/mode parity for this skill id (repeatable). Use for "
+            "known consumer overlays such as portal mc-sync/SKILL.md."
+        ),
+    )
     parser.add_argument("--selftest", action="store_true")
     args = parser.parse_args()
 
@@ -269,6 +344,8 @@ def main() -> int:
             args.manifest,
             args.package_id,
             args.skill,
+            allow_extra_consumer_files=args.allow_extra_consumer_files,
+            allow_content_diff_skills=set(args.allow_content_diff_skill),
         )
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         print(f"consumer skill parity error: {exc}", file=sys.stderr)
