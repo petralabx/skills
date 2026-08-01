@@ -1,6 +1,6 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.6.2",
+  "version": "1.6.3",
   "publishedAt": "2026-07-31T11:54:00Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
@@ -179,7 +179,7 @@
     {
       "id": "canvas",
       "name": "canvas",
-      "description": "A Cursor Canvas is a live React app that the user can open beside the chat. You MUST use a canvas when the agent produces a standalone analytical artifact — quantitative analyses, billing investigations, security audits, architecture reviews, data-heavy content, timelines, charts, tables, interactive explorations, repeatable tools, or any response that benefits from visual layout. Especially prefer a canvas when presenting results from MCP tools (Datadog, Databricks, Linear, Sentry, Slack, etc.) where the data is the deliverable — render it in a rich canvas rather than dumping it into a markdown table or code block. If you catch yourself about to write a markdown table, stop and use a canvas instead. You MUST also read this skill whenever you create, edit, or debug any .canvas.tsx file.",
+      "description": "A Cursor Canvas is a live React app that the user can open beside the chat. You MUST use a canvas when the agent produces a standalone analytical artifact \u2014 quantitative analyses, billing investigations, security audits, architecture reviews, data-heavy content, timelines, charts, tables, interactive explorations, repeatable tools, or any response that benefits from visual layout. Especially prefer a canvas when presenting results from MCP tools (Datadog, Databricks, Linear, Sentry, Slack, etc.) where the data is the deliverable \u2014 render it in a rich canvas rather than dumping it into a markdown table or code block. If you catch yourself about to write a markdown table, stop and use a canvas instead. You MUST also read this skill whenever you create, edit, or debug any .canvas.tsx file.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/canvas/",
@@ -432,7 +432,7 @@
     {
       "id": "plx-knowledge-video",
       "name": "plx-knowledge-video",
-      "description": "Produce a PLX Knowledge Hub video package for a Portal or VMC workflow — a narrated, captioned MP4 with smart zooms and control-point annotations, a matching SRT, a How-To Markdown page, and a metadata.yml — by orchestrating the demo-studio skills with an Executive and Finance tone. Use when the user asks to record, film, publish, or refresh a Knowledge Hub how-to, onboarding, or product video for a PLX Portal or VMC flow.",
+      "description": "Produce a PLX Knowledge Hub video package for a Portal or VMC workflow \u2014 a narrated, captioned MP4 with smart zooms and control-point annotations, a matching SRT, a How-To Markdown page, and a metadata.yml \u2014 by orchestrating the demo-studio skills with an Executive and Finance tone. Use when the user asks to record, film, publish, or refresh a Knowledge Hub how-to, onboarding, or product video for a PLX Portal or VMC flow.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/plx-knowledge-video/",
@@ -892,7 +892,7 @@
     {
       "id": "uat-weekly-batch-loop",
       "name": "uat-weekly-batch-loop",
-      "description": "Run one weekly PLX UAT session-batch cycle: select ≤5 batches from Open / In Progress / Failed Retest, get Vince's one approval, dispatch one worker session/PR per batch, email submitters after staging Ready, and close the week with WEEKLY-LOG + lessons + brain_ingest. Use when asked to run the weekly UAT loop, process UAT session batches, or /loop the UAT weekly cycle. Done only when tickets reach Resolution=Verified (submitter-driven).",
+      "description": "Run one weekly PLX UAT session-batch cycle: select \u22645 batches from Open / In Progress / Failed Retest, get Vince's one approval, dispatch one worker session/PR per batch, email submitters after staging Ready, and close the week with WEEKLY-LOG + lessons + brain_ingest. Use when asked to run the weekly UAT loop, process UAT session batches, or /loop the UAT weekly cycle. Done only when tickets reach Resolution=Verified (submitter-driven).",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/uat-weekly-batch-loop/",
@@ -917,7 +917,7 @@
     {
       "id": "ui-ux-design-loop",
       "name": "ui-ux-design-loop",
-      "description": "Drive any web surface to near-perfect UI/UX quality with a bounded convergence loop specialized for design-system conformance, interaction wiring, responsive integrity, and accessibility. Composes project-hardener (does not fork the loop engine) and adds a manifest-driven UI gate pack — G1 tokens/components, G2 dead-control sweep, G3 responsive matrix, G4 axe accessibility — plus a scope-gated enhancement phase. Use when the user asks for \"UI/UX loop\", \"harden the UI\", \"design-system alignment\", \"fix dead buttons/wiring\", \"responsive polish\", or \"accessibility pass\" on a web route.",
+      "description": "Drive any web surface to near-perfect UI/UX quality with a bounded convergence loop specialized for design-system conformance, interaction wiring, responsive integrity, and accessibility. Composes project-hardener (does not fork the loop engine) and adds a manifest-driven UI gate pack \u2014 G1 tokens/components, G2 dead-control sweep, G3 responsive matrix, G4 axe accessibility \u2014 plus a scope-gated enhancement phase. Use when the user asks for \"UI/UX loop\", \"harden the UI\", \"design-system alignment\", \"fix dead buttons/wiring\", \"responsive polish\", or \"accessibility pass\" on a web route.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/ui-ux-design-loop/",
@@ -939,7 +939,7 @@
     {
       "id": "vmc-sync",
       "name": "vmc-sync",
-      "description": "Keep Cursor sessions synchronized with VMC (Mission Control) todo/project state via the vmc-context MCP server — checkout, progress, and complete with evidence. Use when working on a VMC-tracked todo, claiming a \"Send to Cursor\" handoff, or when the user references Mission Control tasks, the roadmap, or a todo ID. Requires the vmc-context MCP server or VMC API access.",
+      "description": "Keep Cursor sessions synchronized with VMC (Mission Control) todo/project state via the vmc-context MCP server \u2014 checkout, progress, and complete with evidence. Use when working on a VMC-tracked todo, claiming a \"Send to Cursor\" handoff, or when the user references Mission Control tasks, the roadmap, or a todo ID. Requires the vmc-context MCP server or VMC API access.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/vmc-sync/",
@@ -987,7 +987,7 @@
     {
       "id": "wterm-preflight",
       "name": "wterm-preflight",
-      "description": "Run the canonical local CI gate via scripts/wterm-preflight.sh before committing and pushing in the agentic-swarm / VMC repo (pre-commit fast gate, pre-push full gate). Use before any git commit or push in that repo. If scripts/wterm-preflight.sh is not present in the current repo, this skill does not apply — use that repo's own pre-commit checks instead.",
+      "description": "Run the canonical local CI gate via scripts/wterm-preflight.sh before committing and pushing in the agentic-swarm / VMC repo (pre-commit fast gate, pre-push full gate). Use before any git commit or push in that repo. If scripts/wterm-preflight.sh is not present in the current repo, this skill does not apply \u2014 use that repo's own pre-commit checks instead.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/wterm-preflight/",
@@ -1010,7 +1010,7 @@
     {
       "id": "adversarial-review-loop",
       "name": "adversarial-review-loop",
-      "description": "Bounded build-then-independent-review loop for a meaningful code change. Plans, implements, verifies, and ships a pull request, then runs an INDEPENDENT adversarial reviewer (a different model family than the builder, Codex-class for general review) that returns severity-ranked findings; the builder fixes every finding at or above a configured severity threshold, pushes, and re-reviews. Persists plan, branch, PR, findings, verdict, and iteration so the run resumes safely. Stops only when the reviewer approves, only sub-threshold findings remain, or max-iter is reached — and NEVER reports a stalled, errored, or exhausted run as approved. Use for code changes that benefit from an independent reviewer and several structured review-and-fix rounds — e.g. \"clodex\", \"adversarial review loop\", \"review and fix until approved\", \"independent code review loop\".",
+      "description": "Bounded build-then-independent-review loop for a meaningful code change. Plans, implements, verifies, and ships a pull request, then runs an INDEPENDENT adversarial reviewer (a different model family than the builder, Codex-class for general review) that returns severity-ranked findings; the builder fixes every finding at or above a configured severity threshold, pushes, and re-reviews. Persists plan, branch, PR, findings, verdict, and iteration so the run resumes safely. Stops only when the reviewer approves, only sub-threshold findings remain, or max-iter is reached \u2014 and NEVER reports a stalled, errored, or exhausted run as approved. Use for code changes that benefit from an independent reviewer and several structured review-and-fix rounds \u2014 e.g. \"clodex\", \"adversarial review loop\", \"review and fix until approved\", \"independent code review loop\".",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/adversarial-review-loop/",
@@ -1079,7 +1079,7 @@
     {
       "id": "champion-challenger-loop",
       "name": "champion-challenger-loop",
-      "description": "Bounded self-improving optimization loop for any testable artifact (prompt, policy, config, ranking heuristic, scoring rule). Holds a protected champion plus its gate score, spends a fixed budget proposing one targeted untried challenger per cycle from the latest failure, scores challengers on a cheap tunable working signal, and promotes only on a fresh independent acceptance gate with a minimum margin and no guard regression. Rejects suspiciously easy wins as Goodhart's law and keeps the champion when uncertain. Use when cheap iteration is useful but final acceptance must use fresh evidence the editor never inspected — e.g. \"self-improving loop\", \"champion challenger\", \"optimize this prompt/config with a holdout gate\", \"evolve this heuristic safely\".",
+      "description": "Bounded self-improving optimization loop for any testable artifact (prompt, policy, config, ranking heuristic, scoring rule). Holds a protected champion plus its gate score, spends a fixed budget proposing one targeted untried challenger per cycle from the latest failure, scores challengers on a cheap tunable working signal, and promotes only on a fresh independent acceptance gate with a minimum margin and no guard regression. Rejects suspiciously easy wins as Goodhart's law and keeps the champion when uncertain. Use when cheap iteration is useful but final acceptance must use fresh evidence the editor never inspected \u2014 e.g. \"self-improving loop\", \"champion challenger\", \"optimize this prompt/config with a holdout gate\", \"evolve this heuristic safely\".",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/champion-challenger-loop/",
@@ -1281,7 +1281,7 @@
     {
       "id": "mc-sync",
       "name": "mc-sync",
-      "description": "Keep agent sessions aligned with PLX Mission Control tasks via the PLX-MC MCP server — checkout, progress, and complete with evidence. Use when working PLX MC tasks or when the user references Mission Control dispatch IDs.",
+      "description": "Keep agent sessions aligned with PLX Mission Control tasks via the PLX-MC MCP server \u2014 checkout, progress, and complete with evidence. Use when working PLX MC tasks or when the user references Mission Control dispatch IDs.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/mc-sync/",
@@ -1350,7 +1350,7 @@
     {
       "id": "perf-budget-loop",
       "name": "perf-budget-loop",
-      "description": "Performance optimization loop that drives every route/surface under a named latency budget using one repeatable benchmark. Pins the exact metric, route set, environment, warm-up, and run count; captures a baseline for every target before changes; then makes one optimization at a time and re-measures ALL routes to catch local wins that regress another route. Continues until every target meets the budget under the original conditions. Use when a product has a defined route set, a stable perf harness, and a latency target that maps to a specific metric and environment — e.g. \"sub-50ms page-load loop\", \"get every page under <budget>\", \"performance budget loop\", \"optimize load time across all routes\".",
+      "description": "Performance optimization loop that drives every route/surface under a named latency budget using one repeatable benchmark. Pins the exact metric, route set, environment, warm-up, and run count; captures a baseline for every target before changes; then makes one optimization at a time and re-measures ALL routes to catch local wins that regress another route. Continues until every target meets the budget under the original conditions. Use when a product has a defined route set, a stable perf harness, and a latency target that maps to a specific metric and environment \u2014 e.g. \"sub-50ms page-load loop\", \"get every page under <budget>\", \"performance budget loop\", \"optimize load time across all routes\".",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/perf-budget-loop/",
@@ -1396,7 +1396,7 @@
     {
       "id": "quality-streak-loop",
       "name": "quality-streak-loop",
-      "description": "Realistic product-testing loop that requires N consecutive passing scenarios under a fixed quality bar and turns every failure into durable regression + benchmark coverage before resetting the streak to zero. Runs realistic cases one at a time under consistent conditions; on any failure it documents the case, adds a regression test and benchmark, fixes the root cause, verifies, and restarts the streak. Stops only after N successes in a row at the original bar. Use when quality needs a strict consecutive-success gate and failures should permanently strengthen the suite — e.g. \"quality streak loop\", \"N passing scenarios in a row\", \"harden until it survives realistic testing\", \"soak test until stable\".",
+      "description": "Realistic product-testing loop that requires N consecutive passing scenarios under a fixed quality bar and turns every failure into durable regression + benchmark coverage before resetting the streak to zero. Runs realistic cases one at a time under consistent conditions; on any failure it documents the case, adds a regression test and benchmark, fixes the root cause, verifies, and restarts the streak. Stops only after N successes in a row at the original bar. Use when quality needs a strict consecutive-success gate and failures should permanently strengthen the suite \u2014 e.g. \"quality streak loop\", \"N passing scenarios in a row\", \"harden until it survives realistic testing\", \"soak test until stable\".",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/quality-streak-loop/",
@@ -1465,7 +1465,7 @@
     {
       "id": "seo-geo-visibility-loop",
       "name": "seo-geo-visibility-loop",
-      "description": "Repeatable search + AI-answer visibility loop that audits crawlability, indexation, page intent, titles, internal links, structured data, source citations, and answer-first content, ranks gaps by expected impact, fixes the single highest-leverage issue, then reruns the same crawl and target-query benchmark across search engines and AI answer engines. Repeats until no critical technical issue remains and every priority query maps to a clear answer-ready page. Records test conditions and treats sampled visibility as evidence, not a guaranteed ranking. Use for a public site with defined priority pages and target questions — e.g. \"SEO/GEO audit loop\", \"improve search + AI answer visibility\", \"generative engine optimization\", \"rank for these queries\".",
+      "description": "Repeatable search + AI-answer visibility loop that audits crawlability, indexation, page intent, titles, internal links, structured data, source citations, and answer-first content, ranks gaps by expected impact, fixes the single highest-leverage issue, then reruns the same crawl and target-query benchmark across search engines and AI answer engines. Repeats until no critical technical issue remains and every priority query maps to a clear answer-ready page. Records test conditions and treats sampled visibility as evidence, not a guaranteed ranking. Use for a public site with defined priority pages and target questions \u2014 e.g. \"SEO/GEO audit loop\", \"improve search + AI answer visibility\", \"generative engine optimization\", \"rank for these queries\".",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/seo-geo-visibility-loop/",
@@ -1488,7 +1488,7 @@
     {
       "id": "session-brain",
       "name": "session-brain",
-      "description": "Manually compose and submit a company-brain SessionArtifact when the runtime has no session-end hook support (or the hook failed open). Use at the end of any session that changed code, made a decision, or learned something — not for trivial Q&A. Requires VMC_API_KEY; falls back to a local offline-queue file when VMC is unreachable.",
+      "description": "Manually compose and submit a company-brain SessionArtifact when the runtime has no session-end hook support (or the hook failed open). Use at the end of any session that changed code, made a decision, or learned something \u2014 not for trivial Q&A. Requires VMC_API_KEY; falls back to a local offline-queue file when VMC is unreachable.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/session-brain/",
