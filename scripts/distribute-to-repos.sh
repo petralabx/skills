@@ -165,28 +165,28 @@ write_readme() {
 These skills are the **plx-engineering-core** package from
 [petralabx/skills](https://github.com/petralabx/skills) **v${package_version}**.
 
-Cursor Cloud's \`/\` skill picker is **project-scoped**: it enumerates
-\`.cursor/skills/\` in this repo. User-global \`~/.cursor/skills\` alone does
-not populate \`/\`.
+Cursor Cloud's "/" skill picker is **project-scoped**: it enumerates
+".cursor/skills/" in this repo. User-global "~/.cursor/skills" alone does
+not populate "/".
 
-**Branch base:** these project skills ship on **\`staging\`**, not \`master\`
-(\`master\` is the live-release branch and is stale for the skills pack). If a
-checkout of \`master\` shows no \`.cursor/skills/\`, that is expected — verify
-\`origin/staging\` before concluding anything is missing or opening a re-seed PR.
+**Branch base:** these project skills ship on **"staging"**, not "master"
+("master" is the live-release branch and is stale for the skills pack). If a
+checkout of "master" shows no ".cursor/skills/", that is expected — verify
+"origin/staging" before concluding anything is missing or opening a re-seed PR.
 
 **Do not edit package skills here as the source of truth.** Update
-petralabx/skills, then re-run \`scripts/distribute-to-repos.sh\`.
+petralabx/skills, then re-run scripts/distribute-to-repos.sh.
 
-Portal overlays under \`capabilities-deck/\` and \`autonomous-verifier/\`, and the
-customized \`mc-sync/SKILL.md\`, are preserved across syncs.
+Portal overlays under capabilities-deck/ and autonomous-verifier/, and the
+customized mc-sync/SKILL.md, are preserved across syncs.
 
-\`scripts/audit-skill-metadata.mjs\` gates the frontmatter of every skill here on
-each PR — an unparseable \`description\` leaves the skill visible but undescribed,
+scripts/audit-skill-metadata.mjs gates the frontmatter of every skill here on
+each PR — an unparseable description leaves the skill visible but undescribed,
 so the agent silently stops invoking it. See
-\`docs/runbooks/CLOUD-AGENT-ENVIRONMENT.md\`.
+docs/runbooks/CLOUD-AGENT-ENVIRONMENT.md.
 
-Synced via \`scripts/distribute-to-repos.sh\` from petralabx/skills@v${package_version}
-(base branch: ${base}).
+Synced via scripts/distribute-to-repos.sh from petralabx/skills@v${package_version}
+on base branch ${base}.
 EOF
   else
     cat > "$dest/.cursor/skills/README.md" <<EOF
@@ -195,15 +195,15 @@ EOF
 These skills are the **plx-engineering-core** package from
 [petralabx/skills](https://github.com/petralabx/skills) **v${package_version}**.
 
-Cursor Cloud's \`/\` skill picker is **project-scoped**: it enumerates
-\`.cursor/skills/\` in this repo. User-global \`~/.cursor/skills\` alone does
-not populate \`/\`.
+Cursor Cloud's "/" skill picker is **project-scoped**: it enumerates
+".cursor/skills/" in this repo. User-global "~/.cursor/skills" alone does
+not populate "/".
 
 **Do not edit skills here as the source of truth.** Update petralabx/skills,
-then re-run \`scripts/distribute-to-repos.sh\`.
+then re-run scripts/distribute-to-repos.sh.
 
-Synced via \`scripts/distribute-to-repos.sh\` from petralabx/skills@v${package_version}
-(base branch: ${base}).
+Synced via scripts/distribute-to-repos.sh from petralabx/skills@v${package_version}
+on base branch ${base}.
 EOF
   fi
 }
