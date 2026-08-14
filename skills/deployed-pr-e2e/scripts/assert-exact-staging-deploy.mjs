@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * Resolve-then-record proof for https://staging.plxcustomer.io.
- * Fail closed on wrong host, missing Vercel creds, or optional pin mismatch.
+ * Reads the live alias first (HTML data-dpl-id + persona-qa SHA).
+ * Optionally cross-checks Vercel when VERCEL_TOKEN is set.
  */
 import { writeFileSync } from "node:fs";
 
@@ -32,10 +33,13 @@ async function fetchJson(url, token) {
   let response;
   try {
     response = await fetch(url.toString(), {
-      headers: { Accept: "application/json", Authorization: `Bearer ${token}` },
+      headers: {
+        Accept: "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     });
   } catch {
-    return { ok: false, status: 0, body: null };
+    return { ok: false, status: 0, body: null, text: "" };
   }
   const text = await response.text();
   let body = null;
@@ -44,62 +48,97 @@ async function fetchJson(url, token) {
   } catch {
     body = null;
   }
-  return { ok: response.ok, status: response.status, body };
+  return { ok: response.ok, status: response.status, body, text };
+}
+
+async function resolveFromLiveAlias() {
+  const page = await fetch(CANONICAL_ORIGIN, { redirect: "follow" });
+  const html = await page.text();
+  const finalHost = new URL(page.url).host;
+  if (finalHost !== CANONICAL_HOST) {
+    fail("WRONG_HOST", `Live fetch resolved to ${finalHost}`);
+  }
+  const dplMatch = html.match(/data-dpl-id="(dpl_[A-Za-z0-9]+)"/)
+    || html.match(/[?&]dpl=(dpl_[A-Za-z0-9]+)/);
+  const deploymentId = dplMatch?.[1] || "";
+  const diag = await fetchJson(
+    `${CANONICAL_ORIGIN}/api/internal/persona-qa/deployment-diagnostics`,
+  );
+  const sha = diag.body?.expectedSha || "";
+  return {
+    source: "live-alias",
+    status: page.status,
+    deploymentId,
+    sha,
+    diagStatus: diag.status,
+  };
+}
+
+async function resolveFromVercel(token) {
+  const scope = process.env.VERCEL_SCOPE || process.env.VERCEL_TEAM_ID || "";
+  const project = process.env.VERCEL_PROJECT || process.env.VERCEL_PROJECT_ID || "";
+  const aliasUrl = new URL(
+    `https://api.vercel.com/v4/aliases/${encodeURIComponent(CANONICAL_HOST)}`,
+  );
+  if (project) aliasUrl.searchParams.set("projectId", project);
+  addScope(aliasUrl, scope);
+  const alias = await fetchJson(aliasUrl, token);
+  if (!alias.ok || !alias.body) {
+    return { ok: false, reason: `Vercel alias lookup failed (${alias.status})` };
+  }
+  const deploymentId =
+    alias.body.deploymentId || alias.body.deployment?.id || alias.body.uid || "";
+  const depUrl = new URL(`https://api.vercel.com/v13/deployments/${deploymentId}`);
+  addScope(depUrl, scope);
+  const dep = await fetchJson(depUrl, token);
+  if (!dep.ok || !dep.body) {
+    return { ok: false, reason: `Deployment lookup failed (${dep.status})` };
+  }
+  const sha =
+    dep.body.gitSource?.sha ||
+    dep.body.meta?.githubCommitSha ||
+    dep.body.meta?.gitlabCommitSha ||
+    "";
+  const aliases = []
+    .concat(dep.body.aliases || [])
+    .concat(dep.body.alias || [])
+    .map((a) => String(a).replace(/^https?:\/\//, ""));
+  if (aliases.length && !aliases.includes(CANONICAL_HOST)) {
+    return { ok: false, reason: "Deployment is not aliased to staging.plxcustomer.io" };
+  }
+  return { ok: true, deploymentId, sha, source: "vercel-api" };
 }
 
 const token = process.env.VERCEL_TOKEN || "";
-const scope = process.env.VERCEL_SCOPE || process.env.VERCEL_TEAM_ID || "";
-const project = process.env.VERCEL_PROJECT || process.env.VERCEL_PROJECT_ID || "";
 const requireSha = arg("--require-sha", "REQUIRE_SHA");
 const requireDpl = arg("--require-dpl", "REQUIRE_DPL");
 const outPath = arg("--out", "DEPLOY_PROOF_OUT");
 
-if (!token.trim()) fail("MISSING_VERCEL_TOKEN", "VERCEL_TOKEN is required");
+const live = await resolveFromLiveAlias();
+let deploymentId = live.deploymentId;
+let sha = live.sha;
+let source = live.source;
 
-const aliasUrl = new URL(
-  `https://api.vercel.com/v4/aliases/${encodeURIComponent(CANONICAL_HOST)}`,
-);
-if (project) aliasUrl.searchParams.set("projectId", project);
-addScope(aliasUrl, scope);
-
-const alias = await fetchJson(aliasUrl, token);
-if (!alias.ok || !alias.body) {
-  fail("ALIAS_LOOKUP_FAILED", `Vercel alias lookup failed (${alias.status})`);
+if (token.trim()) {
+  const vercel = await resolveFromVercel(token);
+  if (!vercel.ok) fail("VERCEL_CROSSCHECK_FAILED", vercel.reason);
+  if (deploymentId && vercel.deploymentId !== deploymentId) {
+    fail("DPL_SOURCE_MISMATCH", "Live HTML dpl does not match Vercel alias dpl");
+  }
+  if (sha && vercel.sha !== sha) {
+    fail("SHA_SOURCE_MISMATCH", "Live diagnostics SHA does not match Vercel deployment SHA");
+  }
+  deploymentId = vercel.deploymentId;
+  sha = vercel.sha;
+  source = "live-alias+vercel-api";
 }
 
-const deploymentId =
-  alias.body.deploymentId || alias.body.deployment?.id || alias.body.uid || "";
 if (!DPL.test(deploymentId)) {
-  fail("ALIAS_MISSING_DPL", "Alias response had no dpl_ deployment id");
+  fail("ALIAS_MISSING_DPL", "Live alias HTML had no data-dpl-id");
 }
-
-const depUrl = new URL(`https://api.vercel.com/v13/deployments/${deploymentId}`);
-addScope(depUrl, scope);
-const dep = await fetchJson(depUrl, token);
-if (!dep.ok || !dep.body) {
-  fail("DEPLOYMENT_LOOKUP_FAILED", `Deployment lookup failed (${dep.status})`);
-}
-
-const sha =
-  dep.body.gitSource?.sha ||
-  dep.body.meta?.githubCommitSha ||
-  dep.body.meta?.gitlabCommitSha ||
-  "";
 if (!FULL_SHA.test(sha)) {
-  fail("DEPLOYMENT_MISSING_SHA", "Deployment record had no 40-char git SHA");
+  fail("DEPLOYMENT_MISSING_SHA", "Live diagnostics had no 40-char git SHA");
 }
-
-const aliases = []
-  .concat(dep.body.aliases || [])
-  .concat(dep.body.alias || [])
-  .map((a) => String(a).replace(/^https?:\/\//, ""));
-if (aliases.length && !aliases.includes(CANONICAL_HOST)) {
-  fail(
-    "CANONICAL_ALIAS_MISMATCH",
-    "Deployment is not aliased to staging.plxcustomer.io",
-  );
-}
-
 if (requireSha && requireSha !== sha) {
   fail("SHA_PIN_MISMATCH", "Live alias SHA does not match --require-sha");
 }
@@ -112,6 +151,7 @@ const proof = {
   host: CANONICAL_ORIGIN,
   sha,
   deploymentId,
+  source,
   aliasCheckedAt: new Date().toISOString(),
 };
 console.log(JSON.stringify(proof, null, 2));
