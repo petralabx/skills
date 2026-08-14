@@ -1,7 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.6.3",
-  "publishedAt": "2026-07-31T11:54:00Z",
+  "version": "1.6.4",
+  "publishedAt": "2026-08-14T10:56:00Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
   "maintainers": [
@@ -35,6 +35,7 @@
         "project-orchestrator",
         "project-research-runner",
         "project-researcher",
+        "research-eval-reuse",
         "quality-gate",
         "reliable-tdd-loop",
         "report-export",
@@ -655,6 +656,26 @@
         "path": "skills/report-export/",
         "importedAt": "2026-07-06T20:45:00Z"
       }
+    },
+    {
+      "id": "research-eval-reuse",
+      "name": "research-eval-reuse",
+      "description": "Researches and scores existing open-source options before building a custom chat surface, tool, adapter, knowledge path, or integration. Use when someone says \"we should just build X\", before a new integration, or when reliability and maintainability are a concern. Skip for trivial one-liners, explicit custom-required product decisions, and emergency hotfixes.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/research-eval-reuse/",
+      "runtimes": [
+        "cursor",
+        "claude",
+        "codex"
+      ],
+      "tags": [
+        "research",
+        "reuse",
+        "evaluation",
+        "architecture"
+      ],
+      "owner": "ops@petralabx.com"
     },
     {
       "id": "review-bugbot",
