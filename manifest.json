@@ -1,7 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.6.4",
-  "publishedAt": "2026-08-14T10:56:00Z",
+  "version": "1.6.5",
+  "publishedAt": "2026-08-14T17:30:00Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
   "maintainers": [
@@ -25,6 +25,7 @@
         "create-rule",
         "create-skill",
         "dead-code-triage",
+        "deployed-pr-e2e",
         "isomorphic-refactor",
         "migrate-to-skills",
         "plx-graph-mail",
@@ -360,6 +361,24 @@
         "path": ".cursor/skills/dead-code-triage/",
         "importedAt": "2026-06-30T19:18:04Z"
       }
+    },
+    {
+      "id": "deployed-pr-e2e",
+      "name": "deployed-pr-e2e",
+      "description": "Run a fail-closed authenticated E2E evidence matrix against the live staging.plxcustomer.io deploy for a named pack. Use when a human explicitly names this skill or asks to run the deployed-PR UAT harness. Scores SOP cases plus edge, workflow-loop, speed, and UI/UX rows. Does not auto-start on casual readiness questions.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/deployed-pr-e2e/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "uat",
+        "e2e",
+        "staging"
+      ],
+      "owner": "vince@petrasoap.com"
     },
     {
       "id": "isomorphic-refactor",

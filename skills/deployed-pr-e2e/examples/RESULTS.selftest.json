@@ -1,0 +1,27 @@
+{
+  "proof": {
+    "host": "https://staging.plxcustomer.io",
+    "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "deploymentId": "dpl_selftest",
+    "aliasCheckedAt": "2026-08-14T17:00:00Z"
+  },
+  "pack": "bom-comms",
+  "verdict": "not-operator-ready",
+  "independentVerify": { "score": 9, "pass": true },
+  "rows": [
+    {
+      "id": "BCOM-01",
+      "result": "PASS",
+      "url": "https://staging.plxcustomer.io/mrp/costing/assembly-bom",
+      "evidence": "examples/RESULTS.selftest.json",
+      "notes": "selftest fixture"
+    }
+  ],
+  "dimensions": {
+    "use-cases": ["BCOM-01"],
+    "edge-cases": ["BCOM-01"],
+    "workflow-loop": ["BCOM-01"],
+    "speed": ["BCOM-01"],
+    "ui-ux": ["BCOM-01"]
+  }
+}
