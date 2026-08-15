@@ -1,0 +1,27 @@
+{
+  "proof": {
+    "host": "https://staging.plxcustomer.io",
+    "sha": "",
+    "deploymentId": "",
+    "aliasCheckedAt": ""
+  },
+  "pack": "bom-comms",
+  "fixture": {
+    "projectId": "",
+    "projectNumber": "",
+    "customer": "",
+    "sandbox": true
+  },
+  "verdict": "not-operator-ready",
+  "independentVerify": { "score": null, "pass": false },
+  "rows": [],
+  "dimensions": {
+    "use-cases": [],
+    "edge-cases": [],
+    "workflow-loop": [],
+    "speed": [],
+    "ui-ux": []
+  },
+  "defects": [],
+  "couldNotDo": []
+}
