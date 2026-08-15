@@ -1,7 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.6.6",
-  "publishedAt": "2026-08-15T11:20:00Z",
+  "version": "1.6.7",
+  "publishedAt": "2026-08-15T17:05:00Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
   "maintainers": [
@@ -88,7 +88,8 @@
         "worktree-bootstrap",
         "domain-modeling",
         "grill-with-docs",
-        "grilling"
+        "grilling",
+        "skillparity"
       ]
     }
   ],
@@ -1831,6 +1832,25 @@
         "path": "skills/productivity/grilling/",
         "importedAt": "2026-08-15T11:20:00Z"
       }
+    },
+    {
+      "id": "skillparity",
+      "name": "skillparity",
+      "description": "Detects the current agent runtime and machine, picks the matching PLX skills install plane (company bootstrap, operator laptop sync, or Cursor Cloud lock), and executes it. Use when the user says skillparity, skill parity, sync skills, bootstrap company skills, or wants Cursor, Claude, Cloud, Hermes, or Grok on the same catalog.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/skillparity/",
+      "runtimes": [
+        "cursor",
+        "claude",
+        "codex"
+      ],
+      "tags": [
+        "skills",
+        "bootstrap",
+        "parity"
+      ],
+      "owner": "ops@petralabx.com"
     }
   ]
 }
