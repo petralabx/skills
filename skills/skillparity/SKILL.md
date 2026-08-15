@@ -46,9 +46,11 @@ Operator signals: home user `vince`, `~/agentic-swarm`, `~/.hermes`, or `~/.grok
 
 ## Source checkout rules
 
-- Prefer the `petralabx/skills` tree that contains this skill.
-- If that tree is a dirty or non-`main` clone, do **not** `git pull` or switch it. Sync from it if `skills/` is present, or from a dedicated `skills-parity-sync` worktree created off `origin/main`.
+- Prefer the `petralabx/skills` tree that contains this skill. That tree must be a git worktree whose `origin` is `petralabx/skills`.
+- An installed copy under `~/.cursor/skills` (or the other home skill dirs) is not a checkout. An empty origin slug is not a source. Fall through to the candidate paths. Prefer a candidate that still contains `skillparity`, then one on `main`.
+- If the containing tree is a dirty or non-`main` clone, do **not** `git pull` or switch it. Sync from it if it is a valid source, or from a dedicated `skills-parity-sync` worktree created off `origin/main`.
 - `~/plx-cursor-skills` is only valid when `origin` is `petralabx/skills`. The historical `taylorvalton/plx-cursor-skills` remote is not a source.
+- Refuse to apply when `source/skills` is a home skill dest. That copy would delete the dest while reading it.
 
 ## After
 

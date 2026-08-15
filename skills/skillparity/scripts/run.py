@@ -107,6 +107,36 @@ def origin_slug(repo: Path) -> str:
     return url
 
 
+def is_git_work_tree(path: Path) -> bool:
+    result = git(path, "rev-parse", "--is-inside-work-tree")
+    return result.returncode == 0 and result.stdout.strip() == "true"
+
+
+def source_overlaps_dest(source: Path) -> bool:
+    """True when source/skills is a home skill dest (or lives inside one)."""
+    src = (source / "skills").resolve()
+    for target in OPERATOR_SYNC_TARGETS:
+        dest = target.resolve()
+        if src == dest:
+            return True
+        try:
+            src.relative_to(dest)
+            return True
+        except ValueError:
+            continue
+    return False
+
+
+def is_petralabx_skills_repo(path: Path) -> bool:
+    if not path.is_dir() or not (path / "skills").is_dir():
+        return False
+    if not is_git_work_tree(path):
+        return False
+    if origin_slug(path) != "petralabx/skills":
+        return False
+    return not source_overlaps_dest(path)
+
+
 def first_existing(candidates: list[Path]) -> Path | None:
     for path in candidates:
         if path.is_dir():
@@ -114,28 +144,36 @@ def first_existing(candidates: list[Path]) -> Path | None:
     return None
 
 
-def find_skills_source() -> tuple[Path | None, str]:
-    if (SKILLS_REPO / "skills").is_dir() and origin_slug(SKILLS_REPO) in {
-        "petralabx/skills",
-        "",
-    }:
-        return SKILLS_REPO, "skill checkout containing skillparity"
-    candidates = [
-        HOME / "petra-lab-x-skills",
-        HOME / ".cursor" / "worktrees" / "skills-skillparity",
-        HOME / ".cursor" / "worktrees" / "skills-parity-sync",
-        Path("/agent/repos/skills"),
-        HOME / "plx-cursor-skills",
-    ]
-    for path in candidates:
-        if not (path / "skills").is_dir():
-            continue
-        slug = origin_slug(path)
-        if slug == "taylorvalton/plx-cursor-skills":
-            continue
-        if slug in {"petralabx/skills", ""}:
-            return path, f"found {path}"
-    return None, "no petralabx/skills checkout with a skills/ tree"
+DEFAULT_SOURCE_CANDIDATES = (
+    HOME / ".cursor" / "worktrees" / "skills-parity-sync",
+    HOME / ".cursor" / "worktrees" / "skills-skillparity",
+    Path("/agent/repos/skills"),
+    HOME / "petra-lab-x-skills",
+    HOME / "plx-cursor-skills",
+)
+
+
+def source_rank(path: Path) -> tuple[int, int]:
+    """Lower is better: skillparity present, then branch main."""
+    has_self = 0 if (path / "skills" / "skillparity" / "SKILL.md").is_file() else 1
+    branch = git(path, "rev-parse", "--abbrev-ref", "HEAD")
+    on_main = 0 if branch.returncode == 0 and branch.stdout.strip() == "main" else 1
+    return (has_self, on_main)
+
+
+def find_skills_source(
+    containing: Path | None = None,
+    candidates: list[Path] | tuple[Path, ...] | None = None,
+) -> tuple[Path | None, str]:
+    containing = SKILLS_REPO if containing is None else containing
+    if is_petralabx_skills_repo(containing):
+        return containing, "skill checkout containing skillparity"
+    search = DEFAULT_SOURCE_CANDIDATES if candidates is None else candidates
+    valid = [path for path in search if is_petralabx_skills_repo(path)]
+    if not valid:
+        return None, "no petralabx/skills checkout with origin petralabx/skills"
+    chosen = min(valid, key=source_rank)
+    return chosen, f"found {chosen}"
 
 
 def find_plx_mc() -> Path | None:
@@ -164,6 +202,10 @@ def copy_tree(src: Path, dest: Path) -> None:
 
 
 def apply_operator_sync(source: Path) -> dict:
+    if source_overlaps_dest(source):
+        raise RuntimeError(
+            f"refusing to sync from dest-overlapping path: {source / 'skills'}"
+        )
     src = source / "skills"
     written: list[str] = []
     for target in OPERATOR_SYNC_TARGETS:
