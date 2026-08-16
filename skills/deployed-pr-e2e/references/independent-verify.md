@@ -17,6 +17,13 @@ Read-only. Do not log in as a different story. Do not change RESULTS.
 5. Confirm the five dimension sections have rows.
 6. Confirm operator-ready is not claimed if any happy-path or required
    dimension row is FAIL.
+7. If RESULTS.surfaceChange.declared is true, confirm UX-VP-* rows
+   exist for each required viewport and have readable screenshots.
+8. If RESULTS.apiChange.declared is true, confirm API-AUTH,
+   API-CONTRACT, and API-ERROR have readable httpProof.
+9. If RESULTS.securityChange.declared is true, confirm SEC-* rows
+   exist. Isolation may be honest BLOCKED. Fail if evidence looks
+   like an exploit or a secret.
 
 Return exactly:
 INDEPENDENT_VERIFY: score=<1-10> pass=YES|NO

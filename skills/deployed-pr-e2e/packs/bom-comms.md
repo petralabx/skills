@@ -14,6 +14,14 @@ happy_path:
 skip:
   - BCOM-29
   - BCOM-30
+viewport_surfaces:
+  - route: /mrp/costing/assembly-bom
+    viewports: [desktop, tablet, mobile]
+  - route: /mrp/sourcing-requests
+    viewports: [desktop, tablet]
+spatial_cases:
+  - BCOM-01
+  - BCOM-11
 ---
 
 # Pack — BOM + Comms (MRP-M-142 / 143 / 144)
@@ -110,10 +118,12 @@ Program (do not invent features):
 
 ### Speed
 
-| ID | Budget |
-|---|---|
-| SP-01 | Assembly BOM editor interactive after open | no budget declared — score BLOCKED unless the pack is later amended with a number |
-| SP-02 | Sourcing detail save-brief round trip | no budget declared |
+Classes from `references/SPEED-BUDGET.md`. Do not invent a number.
+
+| ID | Metric | Class |
+|---|---|---|
+| SP-01 | Assembly BOM editor interactive after open | Page (3000 ms, max of 5 warm) |
+| SP-02 | Sourcing detail save-brief round trip | Write (2000 ms, max of 5 warm) |
 
 ### UI/UX
 
@@ -123,3 +133,24 @@ Program (do not invent features):
 | UX-02 | Validation messages name the field; no raw 500 page |
 | UX-03 | Teams unconfigured card has no error toast |
 | UX-04 | No in-portal Teams compose or presence (correct) |
+| UX-VP-desktop | Required when the named PR stamps `Surface-change: yes`. BOM / sourcing primary surfaces at 1440 x 900 |
+| UX-VP-tablet | Same at 834 x 1112 |
+| UX-VP-mobile | Same at 390 x 844 when the stamp or pack lists mobile |
+
+### API
+
+| ID | Class |
+|---|---|
+| API-AUTH | Required when `Api-change: yes` |
+| API-CONTRACT | STAFF 200. Documented fields. No FM table |
+| API-ERROR | Invalid call returns JSON, not HTML 500 |
+
+### Security
+
+| ID | Class |
+|---|---|
+| SEC-HOST | Required when `Security-change: yes` |
+| SEC-AUTHN | No session → 401 |
+| SEC-AUTHZ | STAFF denied on ADMIN-only |
+| SEC-SECRETS | Evidence has no secret |
+| SEC-ISOLATION | Other-customer project is 403/404, or BLOCKED `no isolation fixture` |

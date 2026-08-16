@@ -12,6 +12,25 @@
     "customer": "",
     "sandbox": true
   },
+  "surfaceChange": {
+    "declared": false,
+    "missing": true,
+    "pr": null,
+    "surfaces": [],
+    "viewports": [],
+    "requiredRowIds": []
+  },
+  "apiChange": {
+    "declared": false,
+    "missing": true,
+    "apis": [],
+    "requiredRowIds": []
+  },
+  "securityChange": {
+    "declared": false,
+    "missing": true,
+    "requiredRowIds": []
+  },
   "verdict": "not-operator-ready",
   "independentVerify": { "score": null, "pass": false },
   "rows": [],
