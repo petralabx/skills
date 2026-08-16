@@ -44,6 +44,26 @@ artifacts/deployed-pr-e2e/<yyyy-mm-dd>/
 `RESULTS.json` rows must include `id`, `result`, `url`, `evidence`,
 `notes`. PASS requires a non-empty `evidence` path or `httpProof`.
 
+Evidence hygiene (independent-verify will deduct below 8 if these fail):
+
+- Do not point UC-01 at `RESULTS.json`. Write a dedicated happy-path
+  proof that lists each ID and its per-case file.
+- Do not reuse one HTML fetch as proof for four rows. Separate GET +
+  file per case.
+- EX-18 must probe live launch hrefs and the live Teams allowlist
+  bundle. An unconfigured card is not that check. There is no write
+  API for `Project.customFields` Teams links.
+- UI/UX PASS rows need a screenshot as well as API/HTML proof.
+- Party-filter PASS must show the filtered ID sets differ.
+- Sourcing vendors come from `GET /api/mrp/sourcing-requests/vendors`
+  (Prisma `Supplier`). Do not use `/api/mrp/suppliers/search` (FM
+  replica ids fail "active approved Supplier").
+- Sample RECEIVED/ACCEPTED updates must send `sampleId` from the
+  REQUESTED row. Linked product id is `linked_product_id`.
+- BCOM-28-mock: live `/outlook-pin` is VITE live mode. Without Outlook,
+  only the office-context error is reachable. Score honest BLOCKED; do
+  not PASS from a source grep of the five pane states.
+
 ## 4. Mail and MIME
 
 If a pack sends mail, From must be the approved ops path
@@ -54,5 +74,6 @@ message body / HTML / MIME / attachment bytes to a PLX API.
 ## 5. Teams and Outlook
 
 Do not file "in-portal Teams chat missing" as a bug unless the pack
-says chat exists. Outlook live pin may be BLOCKED until tenant NAA;
-mock path is an honest BLOCKED/PASS per the pack, not a product FAIL.
+says chat exists. Outlook live pin may be BLOCKED until tenant NAA.
+The hosted `/outlook-pin` build on staging is live-mode; the five
+mock pane states are not a live-alias PASS.
