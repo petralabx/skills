@@ -61,6 +61,17 @@ the named pack file under `packs/`.
   defect**, not a product FAIL. Do not invent cases.
 - Every pack must declare happy-path IDs and the five dimension row
   sets: use-cases, edge-cases, workflow-loop E2E, speed, UI/UX.
+- Speed rows name a class from [references/SPEED-BUDGET.md](references/SPEED-BUDGET.md).
+- Viewport rows follow [references/UX-VIEWPORT.md](references/UX-VIEWPORT.md).
+  If the named PR stamps `Surface-change: yes`, incorporate UX-VP-* at
+  the listed surfaces. Do not infer a surface change from SOP prose.
+- API rows follow [references/API-CONTRACT.md](references/API-CONTRACT.md).
+  `Api-change: yes` incorporates API-AUTH / API-CONTRACT / API-ERROR.
+  Latency reuses the speed classes.
+- Security rows follow [references/SECURITY.md](references/SECURITY.md).
+  `Security-change: yes` incorporates SEC-HOST / AUTHN / AUTHZ /
+  SECRETS / ISOLATION. Defensive checks only. No exploit steps.
+- Maturity map: [references/MATURITY.md](references/MATURITY.md).
 - First pack: [packs/bom-comms.md](packs/bom-comms.md) (UAT-SOP §81).
 
 ## Run loop
@@ -68,12 +79,18 @@ the named pack file under `packs/`.
 ```text
 Deployed-PR E2E
 - [ ] 1. Human named this skill and at least one pack
+- [ ] 1b. If a PR number is named, parse harness stamps
+         (parse-surface-change.mjs --pr N). Missing Surface-change = STOP
 - [ ] 2. Alias proof recorded (SHA + dpl + timestamp)
 - [ ] 3. STAFF session via plx-portal-agent-access
 - [ ] 4. Pick a mutable sandbox / UAT-prefixed fixture; record it
 - [ ] 5. Execute every pack case, then every dimension row
+- [ ] 5b. If Surface-change: yes, prove UX-VP-* at listed surfaces
+- [ ] 5c. If Api-change: yes, prove API-AUTH / CONTRACT / ERROR
+- [ ] 5d. If Security-change: yes, prove SEC-* (defensive only)
 - [ ] 6. Score PASS / FAIL / BLOCKED with URL + evidence
-- [ ] 7. Write RESULTS.md + RESULTS.json
+- [ ] 7. Write RESULTS.md + RESULTS.json (include surfaceChange,
+         apiChange, securityChange)
 - [ ] 8. validate-results.mjs exits 0
 - [ ] 9. Fresh subagent independent-verify score > 8
 - [ ] 10. Verdict: operator-ready or not
@@ -101,6 +118,12 @@ means **not operator-ready**.
 - Agents invent cases or skip deploy-proof and still mark operator-ready
 - A run tests the lagging git alias, production, or emails a real vendor
 - The pack freezes a dated prompt and drifts from the live SOP
+- A named PR is missing `Surface-change:` and the run still marks
+  operator-ready
+- `Surface-change: yes` and the run skips UX-VP-* rows
+- `Api-change: yes` and the run skips API-* rows
+- `Security-change: yes` and the run skips SEC-* rows
+- The run writes an exploit, payload, or attack procedure
 
 ## Out of scope
 
@@ -117,11 +140,18 @@ node scripts/assert-exact-staging-deploy.mjs
 node scripts/assert-exact-staging-deploy.mjs --require-sha <40hex> --require-dpl dpl_...
 node scripts/validate-results.mjs --selftest
 node scripts/validate-results.mjs path/to/RESULTS.json --pack packs/bom-comms.md
+node scripts/parse-surface-change.mjs --selftest
+node scripts/parse-surface-change.mjs --pr 676
 ```
 
 ## Additional resources
 
 - Pack schema: [references/pack-schema.md](references/pack-schema.md)
+- Speed budget: [references/SPEED-BUDGET.md](references/SPEED-BUDGET.md)
+- UX viewport / PR stamp: [references/UX-VIEWPORT.md](references/UX-VIEWPORT.md)
+- API contract: [references/API-CONTRACT.md](references/API-CONTRACT.md)
+- Security: [references/SECURITY.md](references/SECURITY.md)
+- Maturity map: [references/MATURITY.md](references/MATURITY.md)
 - Independent verify: [references/independent-verify.md](references/independent-verify.md)
 - RESULTS templates: [examples/RESULTS.template.md](examples/RESULTS.template.md)
 - Harness detail: [reference.md](reference.md)

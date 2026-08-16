@@ -5,6 +5,11 @@
 import { readFileSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  requiredViewportRows,
+  requiredApiRows,
+  requiredSecurityRows,
+} from "./parse-surface-change.mjs";
 
 const RESULTS = ["PASS", "FAIL", "BLOCKED"];
 const DIMENSIONS = [
@@ -109,6 +114,27 @@ function validate(doc, happyPath) {
       }
     }
   }
+  const vpIds = requiredViewportRows(doc.surfaceChange);
+  for (const id of vpIds) {
+    const row = byId.get(id);
+    if (!row) errs.push(`surface-change declared but ${id} is missing from rows`);
+    else if (!(dim["ui-ux"] || []).includes(id)) {
+      errs.push(`surface-change declared but ${id} is missing from dimensions.ui-ux`);
+    }
+  }
+  const apiIds = requiredApiRows(doc.apiChange);
+  for (const id of apiIds) {
+    if (!byId.get(id)) errs.push(`api-change declared but ${id} is missing from rows`);
+  }
+  const secIds = requiredSecurityRows(doc.securityChange);
+  for (const id of secIds) {
+    if (!byId.get(id)) errs.push(`security-change declared but ${id} is missing from rows`);
+  }
+  for (const extra of ["api", "security"]) {
+    if (dim[extra] != null && (!Array.isArray(dim[extra]) || dim[extra].length < 1)) {
+      errs.push(`dimensions.${extra} must be a non-empty array when present`);
+    }
+  }
   return errs;
 }
 
@@ -135,6 +161,18 @@ if (selftest) {
   if (!badErrs.some((e) => e.includes("PASS requires"))) {
     fail("selftest expected PASS-without-proof to fail");
   }
+  const declared = structuredClone(doc);
+  declared.surfaceChange = { declared: true, viewports: ["desktop"], requiredRowIds: ["UX-VP-desktop"] };
+  const declaredErrs = validate(declared, ["BCOM-01"]);
+  if (!declaredErrs.some((e) => e.includes("UX-VP-desktop"))) {
+    fail("selftest expected declared surface-change to require UX-VP-desktop");
+  }
+  const apiDoc = structuredClone(doc);
+  apiDoc.apiChange = { declared: true, requiredRowIds: ["API-AUTH"] };
+  const apiErrs = validate(apiDoc, ["BCOM-01"]);
+  if (!apiErrs.some((e) => e.includes("API-AUTH"))) {
+    fail("selftest expected declared api-change to require API-AUTH");
+  }
   console.log("OK: validate-results selftest");
   process.exit(0);
 }
@@ -142,6 +180,7 @@ if (selftest) {
 if (!target) {
   console.error("usage: validate-results.mjs <RESULTS.json> [--pack packs/foo.md]");
   console.error("       validate-results.mjs --selftest");
+  console.error("If RESULTS.surfaceChange.declared, UX-VP-* rows are required.");
   process.exit(2);
 }
 

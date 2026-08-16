@@ -9,6 +9,16 @@
 - Deployment:
 - Alias checked at:
 
+## 1b. Surface change
+
+- PR:
+- Surface-change: yes / no / missing (STOP if named PR and missing)
+- Surfaces:
+- Viewports:
+- Api-change:
+- APIs:
+- Security-change:
+
 ## 2. Cases
 
 | Test ID | Result | URL | Evidence file | Notes |
