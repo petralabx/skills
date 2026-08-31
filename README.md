@@ -17,6 +17,7 @@ them into your local skill directories.
 - **staging-dual-db-migrate** — Apply gold/Prisma migrations to **both** staging and UAT DBs.
 - **plx-graph-mail** — Graph app-only mail (default From `cos@petrasoap.com`; canonical staging URL only).
 - **worktree-open-session** — New portal worktree + bootstrap + Cursor window + PASTE-FIRST/KICKOFF.
+- **plx-brand** — Portable PLX brand standard pinned to design-system v1.3.0 (colour tokens, type, logo, documents). Values come from `tokens.css`; do not hand-edit hex.
 
 See `manifest.json` for the full published catalog (`plx-engineering-core`).
 

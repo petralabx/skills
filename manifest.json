@@ -1,7 +1,7 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.6.10",
-  "publishedAt": "2026-08-16T10:35:00Z",
+  "version": "1.6.11",
+  "publishedAt": "2026-08-31T21:47:33Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
   "maintainers": [
@@ -28,6 +28,7 @@
         "deployed-pr-e2e",
         "isomorphic-refactor",
         "migrate-to-skills",
+        "plx-brand",
         "plx-graph-mail",
         "plx-knowledge-video",
         "plx-mc-workstation",
@@ -427,6 +428,30 @@
         "path": ".cursor/skills/migrate-to-skills/",
         "importedAt": "2026-06-30T19:18:04Z"
       }
+    },
+    {
+      "id": "plx-brand",
+      "name": "plx-brand",
+      "description": "The PLX / Petra Lab-X brand standard — colour tokens, type stacks, logo usage, table design, email signature structure, and the chassis-and-folio document vocabulary. Use whenever producing anything that carries the PLX name in any format: Word documents, Excel workbooks, PowerPoint decks, PDFs, letterheads, agreements, proposals, quotes, reports, emails, microsites, or UI. Also use when asked for \"our brand colours\", \"the design system\", \"PLX letterhead\", or to put something \"on brand\". Carries every value inline so it works on surfaces with no checkout of this repository.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/plx-brand/",
+      "runtimes": [
+        "cursor",
+        "claude"
+      ],
+      "tags": [
+        "brand",
+        "design-system"
+      ],
+      "owner": "ops@petralabx.com",
+      "sourceProvenance": {
+        "repo": "plx-customer-portal",
+        "ref": "cursor/plx-brand-fanout-remount-1320-8f8f",
+        "path": ".cursor/skills/plx-brand/",
+        "importedAt": "2026-08-31T21:47:33Z"
+      },
+      "notes": "Generated from portal design-system/tokens.css and pinned to plx-design-system v1.3.0. Do not hand-edit hex — regenerate from portal authority when the design-system manifest bumps."
     },
     {
       "id": "plx-graph-mail",
