@@ -21,5 +21,30 @@
       "mcp__PLX-MC-Hub__mc_create_bucket",
       "mcp__PLX-MC-Hub__mc_create_routed_task"
     ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/workstream-note.mjs\" session-start",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/workstream-note.mjs\" stop",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }
