@@ -1,6 +1,6 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.6.11",
+  "version": "1.6.12",
   "publishedAt": "2026-08-31T21:47:33Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
@@ -1876,6 +1876,40 @@
         "parity"
       ],
       "owner": "ops@petralabx.com"
+    },
+    {
+      "id": "handoff",
+      "name": "handoff",
+      "description": "Update this workstream's handoff note in docs/workstreams/ so the next session or teammate can pick it up. Use before you end a session, after a significant decision, or when the Stop hook says the note is stale.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/handoff/",
+      "runtimes": [
+        "claude"
+      ],
+      "tags": [
+        "workflow",
+        "workstreams"
+      ],
+      "owner": "ops@petralabx.com",
+      "notes": "Workstream protocol (TASK-3953). Needs scripts/workstream-note.mjs and docs/workstreams/ in the consumer repo; copies live in each petralabx repo's .claude/skills/."
+    },
+    {
+      "id": "resume-workstream",
+      "name": "resume-workstream",
+      "description": "Load this branch's workstream note from docs/workstreams/, check it against the repo, and summarise where the work stands and what to do next. Use at the start of a session that continues earlier work.",
+      "status": "published",
+      "tier": "company",
+      "contentPath": "skills/resume-workstream/",
+      "runtimes": [
+        "claude"
+      ],
+      "tags": [
+        "workflow",
+        "workstreams"
+      ],
+      "owner": "ops@petralabx.com",
+      "notes": "Workstream protocol (TASK-3953). Needs scripts/workstream-note.mjs and docs/workstreams/ in the consumer repo; copies live in each petralabx repo's .claude/skills/."
     }
   ]
 }
