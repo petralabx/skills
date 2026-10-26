@@ -1,6 +1,6 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.6.12",
+  "version": "1.6.13",
   "publishedAt": "2026-08-31T21:47:33Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
@@ -90,7 +90,9 @@
         "domain-modeling",
         "grill-with-docs",
         "grilling",
-        "skillparity"
+        "skillparity",
+        "handoff",
+        "resume-workstream"
       ]
     }
   ],
@@ -1885,6 +1887,7 @@
       "tier": "company",
       "contentPath": "skills/handoff/",
       "runtimes": [
+        "cursor",
         "claude"
       ],
       "tags": [
@@ -1892,7 +1895,7 @@
         "workstreams"
       ],
       "owner": "ops@petralabx.com",
-      "notes": "Workstream protocol (TASK-3953). Needs scripts/workstream-note.mjs and docs/workstreams/ in the consumer repo; copies live in each petralabx repo's .claude/skills/."
+      "notes": "Workstream protocol (TASK-3953); in plx-engineering-core since v1.6.13 (Vince, 2026-10-26, TASK-3988). Needs scripts/workstream-note.mjs and docs/workstreams/ in the consumer repo. distribute-to-repos.sh copies it to .cursor/skills/; Claude Code reads the repo's .claude/skills/ copy."
     },
     {
       "id": "resume-workstream",
@@ -1902,6 +1905,7 @@
       "tier": "company",
       "contentPath": "skills/resume-workstream/",
       "runtimes": [
+        "cursor",
         "claude"
       ],
       "tags": [
@@ -1909,7 +1913,7 @@
         "workstreams"
       ],
       "owner": "ops@petralabx.com",
-      "notes": "Workstream protocol (TASK-3953). Needs scripts/workstream-note.mjs and docs/workstreams/ in the consumer repo; copies live in each petralabx repo's .claude/skills/."
+      "notes": "Workstream protocol (TASK-3953); in plx-engineering-core since v1.6.13 (Vince, 2026-10-26, TASK-3988). Needs scripts/workstream-note.mjs and docs/workstreams/ in the consumer repo. distribute-to-repos.sh copies it to .cursor/skills/; Claude Code reads the repo's .claude/skills/ copy."
     }
   ]
 }
