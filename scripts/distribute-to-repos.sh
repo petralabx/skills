@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Distribute plx-engineering-core skills into consumer repos' .cursor/skills/
-# so Cursor Cloud's / picker (project-scoped) lists them.
+# so Cursor Cloud's / picker (project-scoped) lists them, and apply the
+# workstream protocol bundle (scripts/apply-workstream-bundle.py, TASK-3953):
+# the note hook script, docs/workstreams/, the Claude Code skills and hooks,
+# the guide section and the PR template checkbox.
 #
 # Usage:
 #   scripts/distribute-to-repos.sh [--dry-run|--check] [--repos repo1,repo2]
@@ -212,7 +215,7 @@ for repo in "${REPOS[@]}"; do
   base="${BASE_MAP[$repo]:-main}"
   echo "=== $org/$repo (base=$base) ==="
   if [[ "$dry_run" -eq 1 ]]; then
-    echo "DRY-RUN: would sync ${#PACKAGE_SKILLS[@]} package skills into $org/$repo:.cursor/skills (branch=$branch)"
+    echo "DRY-RUN: would sync ${#PACKAGE_SKILLS[@]} package skills into $org/$repo:.cursor/skills and apply the workstream bundle (branch=$branch)"
     continue
   fi
 
@@ -252,6 +255,7 @@ for repo in "${REPOS[@]}"; do
       done
     fi
     "${python_cmd[@]}" "${parity_args[@]}"
+    "${python_cmd[@]}" "$repo_root/scripts/apply-workstream-bundle.py" --check --consumer-root "$dest"
     continue
   fi
 
@@ -286,11 +290,20 @@ for repo in "${REPOS[@]}"; do
   "${python_cmd[@]}" "${parity_args[@]}"
 
   git -C "$dest" add -f .cursor/skills
+
+  # The script prints each path it wrote; a temp file keeps its exit status under set -e.
+  bundle_out="$workdir/bundle-$repo.txt"
+  "${python_cmd[@]}" "$repo_root/scripts/apply-workstream-bundle.py" --consumer-root "$dest" > "$bundle_out"
+  mapfile -t bundle_paths < "$bundle_out"
+  if [[ "${#bundle_paths[@]}" -gt 0 ]]; then
+    git -C "$dest" add -- "${bundle_paths[@]}"
+  fi
+
   if git -C "$dest" diff --cached --quiet; then
     echo "no changes"
     continue
   fi
-  git -C "$dest" commit -m "chore(skills): sync plx-engineering-core v${package_version}"
+  git -C "$dest" commit -m "chore(skills): sync plx-engineering-core v${package_version} and the workstream bundle"
   git -C "$dest" push -u origin "$branch"
   echo "pushed $org/$repo@$branch — open/update PR against $base"
 done

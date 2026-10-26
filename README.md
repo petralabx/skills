@@ -37,6 +37,15 @@ bash scripts/distribute-to-repos.sh --dry-run
 Then open/merge PRs (or use `gh pr create`). Canonical source stays this repo;
 consumers hold a committed snapshot.
 
+The same run applies the workstream protocol bundle (TASK-3953) with
+`scripts/apply-workstream-bundle.py`. It copies `scripts/workstream-note.mjs`,
+the note template, the Cursor rule and commands, and `.claude/skills/handoff`
+and `resume-workstream`. It adds a `docs/workstreams/README.md` index, the
+Claude Code hooks, the worktree `.gitignore` lines, the guide section and the
+PR template checkbox only when a repo lacks them, and skips generated guides.
+This repo's own copy of the bundle is the source. `--check` reports drift, and
+`python3 scripts/apply-workstream-bundle.py --selftest` tests the script.
+
 Skip `agentic-swarm` (already carries a richer local skill set) and this repo.
 
 ## Activate (sync into your machine)
