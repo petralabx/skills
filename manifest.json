@@ -1,6 +1,6 @@
 {
   "schemaVersion": "plx-cursor-skills-manifest/v1",
-  "version": "1.6.13",
+  "version": "1.6.14",
   "publishedAt": "2026-08-31T21:47:33Z",
   "repo": "petralabx/skills",
   "defaultBranch": "main",
@@ -915,7 +915,7 @@
     {
       "id": "uat-feedback-batch-fix",
       "name": "uat-feedback-batch-fix",
-      "description": "Diagnose and fix one PLX UAT Feedback session batch: one PR into staging with a plain UAT-Feedback: <ids> stamp, wait for Vercel Ready + mark-ready, then email submitters from cos@petrasoap.com to retest. Use when given a session batch, a master-prompt pack of UAT tickets, BATCH-WORKER placeholders, or when the weekly UAT loop dispatches a single batch. Does not set Resolution=Verified.",
+      "description": "HISTORICAL (retired 2026-10-26; do not use for new UAT work, see uat-runner): Diagnose and fix one PLX UAT Feedback session batch: one PR into staging with a plain UAT-Feedback: <ids> stamp, wait for Vercel Ready + mark-ready, then email submitters from cos@petrasoap.com to retest. Use when given a session batch, a master-prompt pack of UAT tickets, BATCH-WORKER placeholders, or when the weekly UAT loop dispatches a single batch. Does not set Resolution=Verified.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/uat-feedback-batch-fix/",
@@ -940,7 +940,7 @@
     {
       "id": "uat-runner",
       "name": "uat-runner",
-      "description": "Run PLX portal User Acceptance Testing (UAT) scenarios and record results as governed evidence. Use when asked to run UAT, execute acceptance tests for the customer portal, validate go-live readiness, or update the portal UAT quality-ledger. Checks out the MC task via the PLX-MC MCP, runs the UAT cases, and writes results to the portal uat quality-ledger so Mission Control sees the same posture under BKT-UAT.",
+      "description": "Run PLX portal User Acceptance Testing (UAT) scenarios and record results as governed evidence. Use when asked to run UAT, execute acceptance tests for the customer portal, validate go-live readiness, or update the portal UAT quality-ledger. Records case results in the portal uat quality-ledger (Mission Control reads it through Loop Ledgers) and follows the per-ticket MC contract for UAT feedback tickets. UAT results are PASS, FAIL or unverified, never Verified.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/uat-runner/",
@@ -963,7 +963,7 @@
     {
       "id": "uat-weekly-batch-loop",
       "name": "uat-weekly-batch-loop",
-      "description": "Run one weekly PLX UAT session-batch cycle: select ≤5 batches from Open / In Progress / Failed Retest, get Vince's one approval, dispatch one worker session/PR per batch, email submitters after staging Ready, and close the week with WEEKLY-LOG + lessons + brain_ingest. Use when asked to run the weekly UAT loop, process UAT session batches, or /loop the UAT weekly cycle. Done only when tickets reach Resolution=Verified (submitter-driven).",
+      "description": "HISTORICAL (retired 2026-10-26; do not use for new UAT work, see uat-runner): Run one weekly PLX UAT session-batch cycle: select ≤5 batches from Open / In Progress / Failed Retest, get Vince's one approval, dispatch one worker session/PR per batch, email submitters after staging Ready, and close the week with WEEKLY-LOG + lessons + brain_ingest. Use when asked to run the weekly UAT loop, process UAT session batches, or /loop the UAT weekly cycle. Done only when tickets reach Resolution=Verified (submitter-driven).",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/uat-weekly-batch-loop/",
@@ -1628,7 +1628,7 @@
     {
       "id": "uat-loop-invariants",
       "name": "uat-loop-invariants",
-      "description": "Frozen pass/fail gates for the PLX UAT weekly session-batch loop (V0 week-list, V2 PR stamp, V4 mail, V5 smoke, V6 no agent-Verified, V9 week closeout) plus independent verify (fresh subagent, score > 8) and OUTPUT/MEMORY artifacts. Use before Vince approves the week list, before merge/email, and at week closeout. Never \"fix\" by rewriting policy. Policy: SPEC.md when present.",
+      "description": "HISTORICAL (retired 2026-10-26; do not use for new UAT work, see uat-runner): Frozen pass/fail gates for the PLX UAT weekly session-batch loop (V0 week-list, V2 PR stamp, V4 mail, V5 smoke, V6 no agent-Verified, V9 week closeout) plus independent verify (fresh subagent, score > 8) and OUTPUT/MEMORY artifacts. Use before Vince approves the week list, before merge/email, and at week closeout. Never \"fix\" by rewriting policy. Policy: SPEC.md when present.",
       "status": "published",
       "tier": "company",
       "contentPath": "skills/uat-loop-invariants/",
