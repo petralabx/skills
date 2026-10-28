@@ -162,9 +162,11 @@ On an approved gate, hand the frozen candidate to the spine skill for the mode:
 
 **A plan reaches Mission Control as a draft.** When the approved work adds a
 project, or two or more buckets, to Mission Control, nothing is created
-directly. `project-researcher` saves the plan with `mc_save_draft` and submits it
-(see its "Save the Plan as a Mission Control Draft"), naming this gate's
-required approvers as the draft's `reviewers`. The author accepts the draft in
+directly. The handoff names this gate's required approvers, and
+`project-researcher` saves the plan with `mc_save_draft` and submits it with
+those approvers as the draft's `reviewers` (see its "Save the Plan as a
+Mission Control Draft"). It then writes the draft id into this ledger's
+`## Handoff` section. The author accepts the draft in
 Mission Control, which creates the project, buckets and tasks. Accepting a
 draft is not execution authorization either.
 

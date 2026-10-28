@@ -119,13 +119,18 @@ accepts it in Mission Control, which creates the live records. Smaller work
      approach's risks and blast radius; `openQuestions`; `sources` (`ref`,
      `title`, `url`, `kind` internal or external); `artifacts` as links or
      inline markdown or Mermaid.
-   - `reviewers`: the people who should check the plan, if the person named any.
+   - `reviewers`: the people who should check the plan. When the work came from
+     a `guided-project-discovery` handoff, these are its gate's required
+     approvers, which the handoff names; otherwise, the people the person named.
 2. Fix what the returned `preflight` lists, with `mc_save_draft` and the
    `draftId`. Each section you send replaces that section.
 3. Call `mc_submit_draft`. It refuses with `draft_not_ready` and every problem
    until the draft is complete; fix them and submit again.
 4. Tell the person the draft id (`DRF-<n>`) and that they accept it in Mission
    Control once the reviews are in. Agents never accept a draft.
+5. When the work came from a `guided-project-discovery` handoff, add the draft
+   id to that run's ledger, in the `## Handoff` section of
+   `.discovery/<slug>/DISCOVERY.md`.
 
 If the draft tools are missing or answer `drafts_disabled`, stop at the
 `RESEARCH.md` handoff and say why. Do not create the project directly instead.
