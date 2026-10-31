@@ -9,9 +9,9 @@ Owner: PLX Repo Maintainers
 >
 > | Topic | Canonical source |
 > |-------|------------------|
-> | Agent pillars, PR discipline, evidence | [`taylorvalton/PLX_MC/config/governance-contract.yaml`](https://github.com/taylorvalton/PLX_MC/blob/main/config/governance-contract.yaml) |
-> | Compliance gate, `MC-Checkout`, risk tiers | [`taylorvalton/PLX_MC/docs/COLLABORATOR-SOP.md`](https://github.com/taylorvalton/PLX_MC/blob/main/docs/COLLABORATOR-SOP.md) |
-> | Onboarding checklist | [`taylorvalton/PLX_MC/docs/runbooks/REPO-ONBOARDING.md`](https://github.com/taylorvalton/PLX_MC/blob/main/docs/runbooks/REPO-ONBOARDING.md) |
+> | Agent pillars, PR discipline, evidence | [`petralabx/PLX_MC/config/governance-contract.yaml`](https://github.com/petralabx/PLX_MC/blob/main/config/governance-contract.yaml) |
+> | Compliance gate, `MC-Checkout`, risk tiers | [`petralabx/PLX_MC/docs/COLLABORATOR-SOP.md`](https://github.com/petralabx/PLX_MC/blob/main/docs/COLLABORATOR-SOP.md) |
+> | Onboarding checklist | [`petralabx/PLX_MC/docs/runbooks/REPO-ONBOARDING.md`](https://github.com/petralabx/PLX_MC/blob/main/docs/runbooks/REPO-ONBOARDING.md) |
 >
 > See also: `docs/GOVERNANCE.md` in this repo.
 
